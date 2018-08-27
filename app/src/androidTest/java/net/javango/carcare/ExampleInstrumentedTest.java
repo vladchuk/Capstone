@@ -1,4 +1,4 @@
-package net.javango.capstone;
+package net.javango.carcare;
 
 import android.content.Context;
 import android.support.test.InstrumentationRegistry;
@@ -21,6 +21,6 @@ public class ExampleInstrumentedTest {
         // Context of the app under test.
         Context appContext = InstrumentationRegistry.getTargetContext();
 
-        assertEquals("net.javango.capstone", appContext.getPackageName());
+        assertEquals("net.javango.carcare", appContext.getPackageName());
     }
 }

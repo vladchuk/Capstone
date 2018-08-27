@@ -1,4 +1,4 @@
-package net.javango.capstone;
+package net.javango.carcare;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;

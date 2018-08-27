@@ -1,4 +1,4 @@
-package net.javango.capstone;
+package net.javango.carcare;
 
 import android.os.Bundle;
 import android.support.annotation.LayoutRes;
