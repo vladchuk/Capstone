@@ -1,4 +1,4 @@
-package net.javango.carcare.util.util;
+package net.javango.carcare.util;
 
 import android.os.Handler;
 import android.os.Looper;
