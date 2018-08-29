@@ -12,6 +12,7 @@ public class Car {
     @PrimaryKey
     private int id;
     private String name;
+    private int modelYear;
     private String tireSize;
 
     public Car() {
@@ -40,5 +41,13 @@ public class Car {
 
     public void setTireSize(String tireSize) {
         this.tireSize = tireSize;
+    }
+
+    public int getModelYear() {
+        return modelYear;
+    }
+
+    public void setModelYear(int modelYear) {
+        this.modelYear = modelYear;
     }
 }
