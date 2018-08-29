@@ -1,3 +1,11 @@
 <resources>
     <string name="app_name">Car Care</string>
+    <string name="new_car">Add Car</string>
+    <string name="search_service_stations">Search Service Stations</string>
+    <string name="car_name_label">Name</string>
+    <string name="car_tire_label">Tire Size</string>
+    <string name="car_year_label">Model Year</string>
+    <string name="car_cancel_text">Cancel</string>
+    <string name="car_save_text">Save</string>
+    <string name="car_details">Car Details</string>
 </resources>

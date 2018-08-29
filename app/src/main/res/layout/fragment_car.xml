@@ -8,97 +8,99 @@
     >
 
     <TextView
-        android:id="@+id/name_label"
+        android:id="@+id/car_name_label"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
+        android:text="@string/car_name_label"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         tools:text="Name"/>
 
     <EditText
-        android:id="@+id/name_value"
+        android:id="@+id/car_name_value"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
         android:ems="10"
-        android:inputType="textPersonName"
+        android:inputType="text"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/name_label"
+        app:layout_constraintTop_toBottomOf="@+id/car_name_label"
         tools:text="Dream Car"/>
 
     <TextView
-        android:id="@+id/tire_label"
+        android:id="@+id/car_year_label"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="16dp"
+        android:text="@string/car_year_label"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/year_value"
-        tools:text="Tire Size"/>
+        app:layout_constraintTop_toBottomOf="@+id/car_name_value"
+        tools:text="Model Year"/>
 
     <EditText
-        android:id="@+id/tire_value"
+        android:id="@+id/car_year_value"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
+        android:ems="10"
+        android:inputType="number"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/car_year_label"/>
+
+    <TextView
+        android:id="@+id/car_tire_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="16dp"
+        android:text="@string/car_tire_label"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/car_year_value"
+        tools:text="Tire Size"/>
+
+    <EditText
+        android:id="@+id/car_tire_value"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
         android:ems="10"
         android:inputType="textPersonName"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tire_label"
+        app:layout_constraintTop_toBottomOf="@+id/car_tire_label"
         tools:text="P215/55R 95H"/>
 
     <Button
-        android:id="@+id/cancel_button"
+        android:id="@+id/car_cancel_button"
         android:layout_width="193dp"
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/save_button"
+        app:layout_constraintEnd_toStartOf="@+id/car_save_button"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
+        android:text="@string/car_cancel_text"
         tools:text="Cancel"/>
 
     <Button
-        android:id="@+id/save_button"
+        android:id="@+id/car_save_button"
         android:layout_width="194dp"
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/cancel_button"
+        app:layout_constraintStart_toEndOf="@+id/car_cancel_button"
+        android:text="@string/car_save_text"
         tools:text="Save"/>
-
-    <TextView
-        android:id="@+id/year_label"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/name_value"
-        tools:text="Model Year"/>
-
-    <EditText
-        android:id="@+id/year_value"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:ems="10"
-        android:inputType="number"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/year_label"/>
 
 </android.support.constraint.ConstraintLayout>

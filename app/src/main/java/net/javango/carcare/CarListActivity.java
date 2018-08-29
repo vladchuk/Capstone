@@ -11,9 +11,4 @@ public class CarListActivity extends SingleFragmentActivity {
         return new CarListFragment();
     }
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-    }
 }
