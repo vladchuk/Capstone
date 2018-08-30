@@ -41,7 +41,6 @@ public class CarListFragment extends ListFragment {
                 adapter.setData(cars);
             }
         });
-
         setListAdapter(adapter);
     }
 
@@ -55,7 +54,7 @@ public class CarListFragment extends ListFragment {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.new_car:
-                Intent intent = CarActivity.newIntent(getActivity(), 0);
+                Intent intent = CarActivity.newIntent(getActivity(), null);
                 startActivity(intent);
                 return true;
             case R.id.search_service_stations:
@@ -67,7 +66,9 @@ public class CarListFragment extends ListFragment {
 
     @Override
     public void onListItemClick(ListView l, View v, int position, long id) {
-        // TODO implement some logic
+        Car car = (Car) getListAdapter().getItem(position);
+        Intent intent = CarActivity.newIntent(getActivity(), car.getId());
+        startActivity(intent);
     }
 
     public static class CarAdapter extends ArrayAdapter<Car> {
@@ -78,6 +79,17 @@ public class CarListFragment extends ListFragment {
         public CarAdapter(Activity context) {
             super(context, R.layout.item_car);
             this.context = context;
+        }
+
+        @Override
+        public int getCount() {
+            return list == null ? 0 : list.size();
+        }
+
+        @Nullable
+        @Override
+        public Car getItem(int position) {
+            return list == null ? null : list.get(position);
         }
 
         public void setData(List<Car> list) {
@@ -104,8 +116,9 @@ public class CarListFragment extends ListFragment {
                 view = convertView;
             }
             ViewHolder holder = (ViewHolder) view.getTag();
-            holder.name.setText(list.get(position).getName());
-            holder.year.setText(list.get(position).getModelYear());
+            Car car = list.get(position);
+            holder.name.setText(car.getName());
+            holder.year.setText(String.valueOf(car.getModelYear()));
             return view;
         }
     }

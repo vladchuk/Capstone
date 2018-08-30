@@ -23,8 +23,8 @@ public interface CarDao {
     @Update
     void updateCar(Car car);
 
-    @Query(value = "select * from car where name = :name")
-    Car findByName(String name);
+    @Query(value = "select * from car where id = :id")
+    LiveData<Car> findById(int id);
 
     @Query(value = "select * from car order by name")
     LiveData<List<Car>> getAll();
