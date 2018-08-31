@@ -8,4 +8,6 @@
     <string name="car_cancel_text">Cancel</string>
     <string name="car_save_text">Save</string>
     <string name="car_details">Car Details</string>
+    <string name="edit_label">Edit</string>
+    <string name="delete_label">Delete</string>
 </resources>

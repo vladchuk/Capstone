@@ -6,24 +6,32 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ListFragment;
+import android.util.Log;
+import android.view.ContextMenu;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import net.javango.carcare.model.AppDatabase;
 import net.javango.carcare.model.Car;
 import net.javango.carcare.model.CarListModel;
 import net.javango.carcare.util.Formatter;
+import net.javango.carcare.util.TaskExecutor;
 
 import java.util.List;
 
 public class CarListFragment extends ListFragment {
+
+    private static final int MENU_CONTEXT_EDIT_ID = 1;
+    private static final int MENU_CONTEXT_DELETE_ID = 2;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -39,6 +47,12 @@ public class CarListFragment extends ListFragment {
             }
         });
         setListAdapter(adapter);
+    }
+
+    @Override
+    public void onActivityCreated(Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        registerForContextMenu(getListView());
     }
 
     @Override
@@ -58,6 +72,28 @@ public class CarListFragment extends ListFragment {
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
+        }
+    }
+
+    @Override
+    public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
+        menu.add(Menu.NONE, MENU_CONTEXT_EDIT_ID, Menu.NONE, getString(R.string.edit_label));
+        menu.add(Menu.NONE, MENU_CONTEXT_DELETE_ID, Menu.NONE, getString(R.string.delete_label));
+    }
+
+    @Override
+    public boolean onContextItemSelected(MenuItem item) {
+        AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
+        Car car = (Car) getListAdapter().getItem(info.position);
+        switch (item.getItemId()) {
+            case MENU_CONTEXT_EDIT_ID:
+                Intent intent = CarActivity.newIntent(getActivity(), car.getId());
+                startActivity(intent);
+                return true;
+            case MENU_CONTEXT_DELETE_ID:
+                TaskExecutor.executeDisk(() -> AppDatabase.getDatabase(getContext()).carDao().deleteCar(car));
+            default:
+                return super.onContextItemSelected(item);
         }
     }
 
