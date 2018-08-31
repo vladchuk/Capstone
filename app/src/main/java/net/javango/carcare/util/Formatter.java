@@ -23,4 +23,13 @@ public class Formatter {
         }
     }
 
+    /**
+     * Converts a number to string. If input is null, returns emtpy string
+     */
+    public static String toString(Integer number) {
+        if (number == null)
+            return "";
+        return String.valueOf(number);
+    }
+
 }

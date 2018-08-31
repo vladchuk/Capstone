@@ -56,6 +56,24 @@ public class CarFragment extends Fragment {
         database = AppDatabase.getDatabase(getActivity());
         setHasOptionsMenu(true);
         getActivity().setTitle(R.string.car_details);
+
+
+        if (savedInstanceState == null) {
+            carId = (Integer) getArguments().getSerializable(ARG_CAR_ID);
+            if (carId != null) {
+//            mButton.setText(R.string.update_button);
+                final CarModel viewModel = CarModel.getInstance(this, database, carId);
+                viewModel.getCar().observe(this, new Observer<Car>() {
+                    @Override
+                    public void onChanged(@Nullable Car car) {
+                        viewModel.getCar().removeObserver(this);
+                        populateUI(car);
+                    }
+                });
+            }
+        } else {
+            carId = (Integer) savedInstanceState.getSerializable(ARG_CAR_ID);
+        }
     }
 
     @Override
@@ -71,27 +89,18 @@ public class CarFragment extends Fragment {
         save = v.findViewById(R.id.car_save_button);
         save.setOnClickListener(view -> onSaveButtonClicked());
 
-        carId = (Integer) getArguments().getSerializable(ARG_CAR_ID);
-        if (carId != null) {
-//            mButton.setText(R.string.update_button);
-                // populate the UI
-                final CarModel viewModel = CarModel.getInstance(this, database, carId);
-
-                viewModel.getCar().observe(this, new Observer<Car>() {
-                    @Override
-                    public void onChanged(@Nullable Car car) {
-                        viewModel.getCar().removeObserver(this);
-                        populateUI(car);
-                    }
-                });
-            }
-
         return v;
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        outState.putSerializable(ARG_CAR_ID, carId);
+        super.onSaveInstanceState(outState);
     }
 
     private void populateUI(Car car) {
         name.setText(car.getName());
-        year.setText(String.valueOf(car.getModelYear()));
+        year.setText(Formatter.toString(car.getModelYear()));
         tire.setText(car.getTireSize());
     }
 
@@ -115,6 +124,7 @@ public class CarFragment extends Fragment {
                 } else {
                     //update
                     car.setId(carId);
+                    database.carDao().updateCar(car);
                 }
                 getActivity().finish();
             }

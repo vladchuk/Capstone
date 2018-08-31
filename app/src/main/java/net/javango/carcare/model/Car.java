@@ -7,12 +7,13 @@ import android.arch.persistence.room.PrimaryKey;
 /**
  * Represents a vehicle in user's garage
  */
-@Entity (indices = {@Index(value = {"name"}, unique = true)})
+@Entity
+//(indices = {@Index(value = {"name"}, unique = true)})
 public class Car {
     @PrimaryKey(autoGenerate = true)
     private int id;
     private String name;
-    private int modelYear;
+    private Integer modelYear;
     private String tireSize;
 
     public Car() {
@@ -43,11 +44,11 @@ public class Car {
         this.tireSize = tireSize;
     }
 
-    public int getModelYear() {
+    public Integer getModelYear() {
         return modelYear;
     }
 
-    public void setModelYear(int modelYear) {
+    public void setModelYear(Integer modelYear) {
         this.modelYear = modelYear;
     }
 }

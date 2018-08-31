@@ -19,6 +19,7 @@ import android.widget.TextView;
 
 import net.javango.carcare.model.Car;
 import net.javango.carcare.model.CarListModel;
+import net.javango.carcare.util.Formatter;
 
 import java.util.List;
 
@@ -28,11 +29,7 @@ public class CarListFragment extends ListFragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
-    }
 
-    @Override
-    public void onActivityCreated(Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
         final CarAdapter adapter = new CarAdapter(getActivity());
         CarListModel viewModel = CarListModel.getInstance(this);
         viewModel.getCars().observe(this, new Observer<List<Car>>() {
@@ -118,7 +115,7 @@ public class CarListFragment extends ListFragment {
             ViewHolder holder = (ViewHolder) view.getTag();
             Car car = list.get(position);
             holder.name.setText(car.getName());
-            holder.year.setText(String.valueOf(car.getModelYear()));
+            holder.year.setText(Formatter.toString(car.getModelYear()));
             return view;
         }
     }
