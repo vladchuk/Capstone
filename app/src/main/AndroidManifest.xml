@@ -18,6 +18,10 @@
         </activity>
         <activity android:name="net.javango.carcare.CarDetailActivity">
         </activity>
+        <activity android:name="net.javango.carcare.ServiceListActivity">
+        </activity>
+        <activity android:name="net.javango.carcare.ServiceDetailActivity">
+        </activity>
     </application>
 
 </manifest>

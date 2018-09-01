@@ -21,11 +21,11 @@ public class Service {
     private Date date;
     // optional
     private Integer mileage;
-    private String type;
+    private String description;
     // optional, whole dollars
     private Integer cost;
     private String location;
-    private String note;
+    private String notes;
 
     private int carId;
 
@@ -57,12 +57,12 @@ public class Service {
         this.mileage = mileage;
     }
 
-    public String getType() {
-        return type;
+    public String getDescription() {
+        return description;
     }
 
-    public void setType(String type) {
-        this.type = type;
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public Integer getCost() {
@@ -81,12 +81,12 @@ public class Service {
         this.location = location;
     }
 
-    public String getNote() {
-        return note;
+    public String getNotes() {
+        return notes;
     }
 
-    public void setNote(String note) {
-        this.note = note;
+    public void setNotes(String notes) {
+        this.notes = notes;
     }
 
     public int getCarId() {

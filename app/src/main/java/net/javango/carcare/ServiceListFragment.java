@@ -5,6 +5,7 @@ import android.arch.lifecycle.Observer;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.ListFragment;
 import android.view.ContextMenu;
 import android.view.LayoutInflater;
@@ -28,10 +29,25 @@ import java.util.List;
 
 public class ServiceListFragment extends ListFragment {
 
+    private static final String ARG_CAR_ID = "car_id";
+
     private static final int MENU_CONTEXT_EDIT_ID = 1;
     private static final int MENU_CONTEXT_DELETE_ID = 2;
 
     private AppDatabase database;
+
+    /**
+     * Creates an instance if this fragment.
+     *
+     * @param carId id of the {@code Car} for which to display services
+     */
+    public static ServiceListFragment newInstance(int carId) {
+        ServiceListFragment fragment = new ServiceListFragment();
+        Bundle bundle = new Bundle();
+        bundle.putInt(ARG_CAR_ID, carId);
+        fragment.setArguments(bundle);
+        return fragment;
+    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
