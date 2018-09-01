@@ -21,7 +21,7 @@ public interface ServiceDao {
     void updateService(Service Service);
 
     @Query(value = "select * from Service where id = :id")
-    Service findById(int id);
+    LiveData<Service> findById(int id);
 
     @Query(value = "select * from Service where carId = :carId order by date desc")
     LiveData<List<Service>> getForCar(int carId);

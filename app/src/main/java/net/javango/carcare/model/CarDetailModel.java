@@ -6,12 +6,12 @@ import android.arch.lifecycle.ViewModelProvider;
 import android.arch.lifecycle.ViewModelProviders;
 import android.support.v4.app.Fragment;
 
-public class CarModel extends ViewModel {
+public class CarDetailModel extends ViewModel {
 
     private LiveData<Car> car;
 
     // must be at least protected
-    protected CarModel(AppDatabase database, int carId) {
+    protected CarDetailModel(AppDatabase database, int carId) {
         car = database.carDao().findById(carId);
     }
 
@@ -22,10 +22,10 @@ public class CarModel extends ViewModel {
     /**
      * Factory method in obtain an instance of this model by carId
      */
-    public static CarModel getInstance(Fragment fragment, AppDatabase db, int carId) {
+    public static CarDetailModel getInstance(Fragment fragment, AppDatabase db, int carId) {
         fragment.getActivity().getApplication();
         CarModelFactory factory = new CarModelFactory(db, carId);
-        CarModel viewModel = ViewModelProviders.of(fragment, factory).get(CarModel.class);
+        CarDetailModel viewModel = ViewModelProviders.of(fragment, factory).get(CarDetailModel.class);
         return viewModel;
     }
 
@@ -34,15 +34,15 @@ public class CarModel extends ViewModel {
         private final AppDatabase db;
         private final int carId;
 
-        public CarModelFactory(AppDatabase database, int taskId) {
+        public CarModelFactory(AppDatabase database, int cid) {
             db = database;
-            carId = taskId;
+            carId = cid;
         }
 
         @Override
         @SuppressWarnings("unchecked")
         public <T extends ViewModel> T create(Class<T> modelClass) {
-            return (T) new CarModel(db, carId);
+            return (T) new CarDetailModel(db, carId);
         }
     }
 

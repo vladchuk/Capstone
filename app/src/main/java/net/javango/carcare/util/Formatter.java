@@ -24,7 +24,7 @@ public class Formatter {
     }
 
     /**
-     * Converts a number to string. If input is null, returns emtpy string
+     * Converts a number to string. If input is null, returns empty string
      */
     public static String toString(Integer number) {
         if (number == null)

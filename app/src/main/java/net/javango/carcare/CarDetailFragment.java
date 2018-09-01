@@ -13,7 +13,7 @@ import android.widget.EditText;
 
 import net.javango.carcare.model.AppDatabase;
 import net.javango.carcare.model.Car;
-import net.javango.carcare.model.CarModel;
+import net.javango.carcare.model.CarDetailModel;
 import net.javango.carcare.util.Formatter;
 import net.javango.carcare.util.TaskExecutor;
 
@@ -58,7 +58,7 @@ public class CarDetailFragment extends Fragment {
             carId = (Integer) getArguments().getSerializable(ARG_CAR_ID);
             if (carId != null) {
 //            mButton.setText(R.string.update_button);
-                final CarModel viewModel = CarModel.getInstance(this, database, carId);
+                final CarDetailModel viewModel = CarDetailModel.getInstance(this, database, carId);
                 viewModel.getCar().observe(this, new Observer<Car>() {
                     @Override
                     public void onChanged(@Nullable Car car) {
