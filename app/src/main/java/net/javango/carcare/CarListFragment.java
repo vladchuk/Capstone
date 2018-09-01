@@ -6,7 +6,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ListFragment;
-import android.util.Log;
 import android.view.ContextMenu;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -16,7 +15,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.CheckBox;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -65,7 +63,7 @@ public class CarListFragment extends ListFragment {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.new_car:
-                Intent intent = CarActivity.newIntent(getActivity(), null);
+                Intent intent = CarDetailActivity.newIntent(getActivity(), null);
                 startActivity(intent);
                 return true;
             case R.id.search_service_stations:
@@ -87,7 +85,7 @@ public class CarListFragment extends ListFragment {
         Car car = (Car) getListAdapter().getItem(info.position);
         switch (item.getItemId()) {
             case MENU_CONTEXT_EDIT_ID:
-                Intent intent = CarActivity.newIntent(getActivity(), car.getId());
+                Intent intent = CarDetailActivity.newIntent(getActivity(), car.getId());
                 startActivity(intent);
                 return true;
             case MENU_CONTEXT_DELETE_ID:
@@ -100,7 +98,7 @@ public class CarListFragment extends ListFragment {
     @Override
     public void onListItemClick(ListView l, View v, int position, long id) {
         Car car = (Car) getListAdapter().getItem(position);
-        Intent intent = CarActivity.newIntent(getActivity(), car.getId());
+        Intent intent = CarDetailActivity.newIntent(getActivity(), car.getId());
         startActivity(intent);
     }
 

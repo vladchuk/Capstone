@@ -1,8 +1,6 @@
 package net.javango.carcare;
 
 import android.arch.lifecycle.Observer;
-import android.arch.lifecycle.ViewModelProviders;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -19,12 +17,10 @@ import net.javango.carcare.model.CarModel;
 import net.javango.carcare.util.Formatter;
 import net.javango.carcare.util.TaskExecutor;
 
-import java.util.Date;
-
 /**
  * Handles {@code Car} UI. Used to insert, update or delete cars.
  */
-public class CarFragment extends Fragment {
+public class CarDetailFragment extends Fragment {
 
     private static final String ARG_CAR_ID = "car_id";
 
@@ -42,8 +38,8 @@ public class CarFragment extends Fragment {
      * @param carId id of the {@code Car} to display and process in this fragment. If {@code null}, it means a new
      *              car is being added
      */
-    public static CarFragment newInstance(Integer carId) {
-        CarFragment fragment = new CarFragment();
+    public static CarDetailFragment newInstance(Integer carId) {
+        CarDetailFragment fragment = new CarDetailFragment();
         Bundle bundle = new Bundle();
         bundle.putSerializable(ARG_CAR_ID, carId);
         fragment.setArguments(bundle);
@@ -79,7 +75,7 @@ public class CarFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle
             savedInstanceState) {
-        View v = inflater.inflate(R.layout.fragment_car, container, false);
+        View v = inflater.inflate(R.layout.fragment_car_detail, container, false);
 
         name = v.findViewById(R.id.car_name_value);
         year = v.findViewById(R.id.car_year_value);

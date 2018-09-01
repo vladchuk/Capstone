@@ -1,23 +1,33 @@
 package net.javango.carcare.model;
 
 import android.arch.persistence.room.Entity;
+import android.arch.persistence.room.ForeignKey;
 import android.arch.persistence.room.PrimaryKey;
 
 import java.util.Date;
 
+import static android.arch.persistence.room.ForeignKey.CASCADE;
+
 /**
  * A service (maintenance) done to a car
  */
-@Entity
+@Entity(foreignKeys = @ForeignKey(entity = Car.class,
+        parentColumns = "id",
+        childColumns = "carId",
+        onDelete = CASCADE))
 public class Service {
-    @PrimaryKey
+    @PrimaryKey(autoGenerate = true)
     private int id;
     private Date date;
-    private int mileage;
+    // optional
+    private Integer mileage;
     private String type;
-    private int cost;
+    // optional, whole dollars
+    private Integer cost;
     private String location;
     private String note;
+
+    private int carId;
 
     public Service() {
         // required bo Room
@@ -39,11 +49,11 @@ public class Service {
         this.date = date;
     }
 
-    public int getMileage() {
+    public Integer getMileage() {
         return mileage;
     }
 
-    public void setMileage(int mileage) {
+    public void setMileage(Integer mileage) {
         this.mileage = mileage;
     }
 
@@ -55,11 +65,11 @@ public class Service {
         this.type = type;
     }
 
-    public int getCost() {
+    public Integer getCost() {
         return cost;
     }
 
-    public void setCost(int cost) {
+    public void setCost(Integer cost) {
         this.cost = cost;
     }
 
@@ -77,5 +87,13 @@ public class Service {
 
     public void setNote(String note) {
         this.note = note;
+    }
+
+    public int getCarId() {
+        return carId;
+    }
+
+    public void setCarId(int carId) {
+        this.carId = carId;
     }
 }
