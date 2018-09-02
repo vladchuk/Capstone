@@ -12,4 +12,5 @@
     <string name="delete_label">Delete</string>
     <string name="service_details">Service Details</string>
     <string name="update_button">Update</string>
+    <string name="miles"> miles</string>
 </resources>

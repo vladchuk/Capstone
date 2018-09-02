@@ -3,16 +3,10 @@
         xmlns:app="http://schemas.android.com/apk/res-auto"
         xmlns:tools="http://schemas.android.com/tools">
 
-    <data>
-
-        <variable
-            name="viewModel"
-            type="net.javango.carcare.model.ServiceDetailModel"/>
-    </data>
-
     <RelativeLayout
-
         android:layout_width="match_parent"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
         android:layout_height="match_parent">
 
         <ScrollView
@@ -25,7 +19,7 @@
                 android:layout_height="wrap_content">
 
                 <TextView
-                    android:id="@+id/service_detail_type_label"
+                    android:id="@+id/service_detail_description_label"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="16dp"
@@ -36,25 +30,25 @@
                     tools:text="Description"/>
 
                 <EditText
-                    android:id="@+id/service_detail_type_value"
+                    android:id="@+id/service_detail_description"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="16dp"
                     android:layout_marginStart="16dp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/service_detail_type_label"
+                    app:layout_constraintTop_toBottomOf="@+id/service_detail_description_label"
                     tools:text="Oil Change"/>
 
                 <TextView
-                    android:id="@+id/service_type_date_label"
+                    android:id="@+id/service_detail_date_label"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="16dp"
                     android:layout_marginTop="16dp"
                     android:text="Date"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/service_detail_type_value"
+                    app:layout_constraintTop_toBottomOf="@+id/service_detail_description"
                     tools:text="Date"/>
 
                 <EditText
@@ -67,7 +61,7 @@
                     android:inputType="date"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/service_type_date_label"
+                    app:layout_constraintTop_toBottomOf="@+id/service_detail_date_label"
                     tools:text="5/9/18"/>
 
                 <TextView

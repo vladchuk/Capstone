@@ -149,7 +149,7 @@ public class CarListFragment extends ListFragment {
             ViewHolder holder = (ViewHolder) view.getTag();
             Car car = list.get(position);
             holder.name.setText(car.getName());
-            holder.year.setText(Formatter.toString(car.getModelYear()));
+            holder.year.setText(Formatter.format(car.getModelYear()));
             return view;
         }
     }

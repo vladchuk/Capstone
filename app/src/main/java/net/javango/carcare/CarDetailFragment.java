@@ -71,6 +71,7 @@ public class CarDetailFragment extends Fragment {
         } else {
             carId = (Integer) savedInstanceState.getSerializable(ARG_CAR_ID);
         }
+        save.setText(carId == null ? R.string.add_button : R.string.update_button);
     }
 
     @Override
@@ -98,7 +99,7 @@ public class CarDetailFragment extends Fragment {
 
     private void populateUI(Car car) {
         name.setText(car.getName());
-        year.setText(Formatter.toString(car.getModelYear()));
+        year.setText(Formatter.format(car.getModelYear()));
         tire.setText(car.getTireSize());
     }
 
@@ -109,8 +110,7 @@ public class CarDetailFragment extends Fragment {
         final Car car = new Car();
         car.setName(name.getText().toString());
         Integer y = Formatter.parseInt(year.getText().toString());
-        if (y != null)
-            car.setModelYear(y);
+        car.setModelYear(y);
         car.setTireSize(tire.getText().toString());
 
         TaskExecutor.executeDisk(new Runnable() {

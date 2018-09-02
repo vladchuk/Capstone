@@ -1,5 +1,6 @@
 package net.javango.carcare;
 
+import android.arch.lifecycle.Observer;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -8,14 +9,15 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.EditText;
 
 import net.javango.carcare.databinding.FragmentServiceDetailBinding;
 import net.javango.carcare.model.AppDatabase;
 import net.javango.carcare.model.Service;
 import net.javango.carcare.model.ServiceDetailModel;
+import net.javango.carcare.util.Formatter;
 import net.javango.carcare.util.TaskExecutor;
+
+import java.util.Date;
 
 /**
  * Handles {@code Service} UI. Used to insert, update or delete services.
@@ -25,16 +27,11 @@ public class ServiceDetailFragment extends Fragment {
     private static final String ARG_CAR_ID = "car_id";
     private static final String ARG_SERVICE_ID = "service_id";
 
-    private EditText name;
-    private EditText year;
-    private EditText tire;
-    private Button cancel;
-    private Button save;
     private AppDatabase database;
     private Integer serviceId;
     private int carId; // should never be null
 
-    private ServiceDetailModel viewModel;
+    FragmentServiceDetailBinding binding;
 
     /**
      * Creates an instance if this fragment.
@@ -64,15 +61,7 @@ public class ServiceDetailFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle
             savedInstanceState) {
 //        View v = inflater.inflate(R.layout.fragment_service_detail, container, false);
-//        name = v.findViewById(R.id.service_name_value);
-//        year = v.findViewById(R.id.service_year_value);
-//        tire = v.findViewById(R.id.service_tire_value);
-//        cancel = v.findViewById(R.id.service_cancel_button);
-//        save = v.findViewById(R.id.service_save_button);
-//        cancel.setOnClickListener(view -> getActivity().finish());
-//        save.setOnClickListener(view -> onSaveButtonClicked());
-//        return v;
-        FragmentServiceDetailBinding binding = DataBindingUtil
+        binding = DataBindingUtil
                 .inflate(inflater, R.layout.fragment_service_detail, container, false);
 
         binding.serviceCancelButton.setOnClickListener(view -> getActivity().finish());
@@ -81,22 +70,19 @@ public class ServiceDetailFragment extends Fragment {
         if (savedInstanceState == null) {
             serviceId = (Integer) getArguments().getSerializable(ARG_SERVICE_ID);
             if (serviceId != null) {
-//            mButton.setText(R.string.update_button);
                 final ServiceDetailModel viewModel = ServiceDetailModel.getInstance(this, database, serviceId);
-//                viewModel.getService().observe(this, new Observer<Service>() {
-//                    @Override
-//                    public void onChanged(@Nullable Service service) {
-//                        viewModel.getService().removeObserver(this);
-//                        populateUI(service);
-//                    }
-//                });
-                binding.setViewModel(viewModel);
-                binding.setLifecycleOwner(this);
+                viewModel.getService().observe(this, new Observer<Service>() {
+                    @Override
+                    public void onChanged(@Nullable Service service) {
+                        viewModel.getService().removeObserver(this);
+                        populateUI(service);
+                    }
+                });
             }
         } else {
             serviceId = (Integer) savedInstanceState.getSerializable(ARG_SERVICE_ID);
         }
-
+        binding.serviceSaveButton.setText(serviceId == null ? R.string.add_button : R.string.update_button);
         return binding.getRoot();
     }
 
@@ -107,20 +93,32 @@ public class ServiceDetailFragment extends Fragment {
     }
 
     private void populateUI(Service service) {
-//        name.setText(service.getName());
-//        year.setText(Formatter.toString(service.getModelYear()));
-//        tire.setText(service.getTireSize());
+        binding.serviceDetailDescription.setText(service.getDescription());
+        binding.serviceDetailDateValue.setText(Formatter.format(service.getDate()));
+        binding.serviceDetailMileageValue.setText(Formatter.format(service.getMileage()));
+        binding.serviceDetailCostValue.setText(Formatter.format(service.getCost()));
+        binding.serviceDetailLocationValue.setText(service.getLocation());
+        binding.serviceDetailNotesValue.setText(service.getNotes());
+    }
+
+    private void populateService(Service service) {
+        service.setDescription((binding.serviceDetailDescription.getText().toString()));
+        Date date = Formatter.parseDate(binding.serviceDetailDateValue.getText().toString());
+        service.setDate(date);
+        Integer mileage = Formatter.parseInt(binding.serviceDetailMileageValue.getText().toString());
+        service.setMileage(mileage);
+        Integer cost = Formatter.parseInt(binding.serviceDetailCostValue.getText().toString());
+        service.setCost(cost);
+        service.setLocation(binding.serviceDetailLocationValue.getText().toString());
+        service.setNotes(binding.serviceDetailNotesValue.getText().toString());
     }
 
     /**
      * Inserts that new service data into the underlying database.
      */
     public void onSaveButtonClicked() {
-        final Service service = viewModel == null ? new Service(carId) : viewModel.getService().getValue();
-//        service.setName(name.getText().toString());
-//        Integer y = Formatter.parseInt(year.getText().toString());
-//        service.setModelYear(y);
-//        service.setTireSize(tire.getText().toString());
+        Service service = new Service(carId);
+        populateService(service);
 
         TaskExecutor.executeDisk(new Runnable() {
             @Override
