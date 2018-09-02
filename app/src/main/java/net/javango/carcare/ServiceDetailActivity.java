@@ -12,20 +12,23 @@ import net.javango.carcare.SingleFragmentActivity;
  */
 public class ServiceDetailActivity extends SingleFragmentActivity {
 
+    private final static String EXTRA_CAR_ID = "net.javango.carcare.car_id";
     private final static String EXTRA_SERVICE_ID = "net.javango.carcare.service_id";
 
     @Override
     protected Fragment createFragment() {
+        int carId = getIntent().getIntExtra(EXTRA_CAR_ID, - 1);
         Integer serviceId = (Integer) getIntent().getSerializableExtra(EXTRA_SERVICE_ID);
-        return CarDetailFragment.newInstance(serviceId);
+        return ServiceDetailFragment.newInstance(carId, serviceId);
     }
 
     /**
      * Creates an intent to open this activity
      * @param serviceId if {@code null}, a new service will be created
      */
-    public static Intent newIntent(Context context, Integer serviceId) {
+    public static Intent newIntent(Context context, int carId, Integer serviceId) {
         Intent intent = new Intent(context, ServiceDetailActivity.class);
+        intent.putExtra(EXTRA_CAR_ID, carId);
         intent.putExtra(EXTRA_SERVICE_ID, serviceId);
         return intent;
     }

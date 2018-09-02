@@ -1,6 +1,6 @@
 package net.javango.carcare;
 
-import android.arch.lifecycle.Observer;
+import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -11,12 +11,10 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 
+import net.javango.carcare.databinding.FragmentServiceDetailBinding;
 import net.javango.carcare.model.AppDatabase;
 import net.javango.carcare.model.Service;
 import net.javango.carcare.model.ServiceDetailModel;
-import net.javango.carcare.model.Service;
-import net.javango.carcare.model.ServiceDetailModel;
-import net.javango.carcare.util.Formatter;
 import net.javango.carcare.util.TaskExecutor;
 
 /**
@@ -24,6 +22,7 @@ import net.javango.carcare.util.TaskExecutor;
  */
 public class ServiceDetailFragment extends Fragment {
 
+    private static final String ARG_CAR_ID = "car_id";
     private static final String ARG_SERVICE_ID = "service_id";
 
     private EditText name;
@@ -33,16 +32,20 @@ public class ServiceDetailFragment extends Fragment {
     private Button save;
     private AppDatabase database;
     private Integer serviceId;
+    private int carId; // should never be null
+
+    private ServiceDetailModel viewModel;
 
     /**
      * Creates an instance if this fragment.
      *
-     * @param serviceId id of the {@code Service} to display and process in this fragment. If {@code null}, it means a new
-     *              service is being added
+     * @param serviceId id of the {@code Service} to display and process in this fragment. If {@code null}, it means
+     *                  a new service is being added
      */
-    public static ServiceDetailFragment newInstance(Integer serviceId) {
+    public static ServiceDetailFragment newInstance(int carId, Integer serviceId) {
         ServiceDetailFragment fragment = new ServiceDetailFragment();
         Bundle bundle = new Bundle();
+        bundle.putInt(ARG_CAR_ID, carId);
         bundle.putSerializable(ARG_SERVICE_ID, serviceId);
         fragment.setArguments(bundle);
         return fragment;
@@ -54,31 +57,13 @@ public class ServiceDetailFragment extends Fragment {
         database = AppDatabase.getDatabase(getActivity());
         setHasOptionsMenu(true);
         getActivity().setTitle(R.string.service_details);
-
-
-        if (savedInstanceState == null) {
-            serviceId = (Integer) getArguments().getSerializable(ARG_SERVICE_ID);
-            if (serviceId != null) {
-//            mButton.setText(R.string.update_button);
-                final ServiceDetailModel viewModel = ServiceDetailModel.getInstance(this, database, serviceId);
-                viewModel.getService().observe(this, new Observer<Service>() {
-                    @Override
-                    public void onChanged(@Nullable Service service) {
-                        viewModel.getService().removeObserver(this);
-                        populateUI(service);
-                    }
-                });
-            }
-        } else {
-            serviceId = (Integer) savedInstanceState.getSerializable(ARG_SERVICE_ID);
-        }
+        carId = getArguments().getInt(ARG_CAR_ID);
     }
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle
             savedInstanceState) {
-        View v = inflater.inflate(R.layout.fragment_service_detail, container, false);
-
+//        View v = inflater.inflate(R.layout.fragment_service_detail, container, false);
 //        name = v.findViewById(R.id.service_name_value);
 //        year = v.findViewById(R.id.service_year_value);
 //        tire = v.findViewById(R.id.service_tire_value);
@@ -86,8 +71,33 @@ public class ServiceDetailFragment extends Fragment {
 //        save = v.findViewById(R.id.service_save_button);
 //        cancel.setOnClickListener(view -> getActivity().finish());
 //        save.setOnClickListener(view -> onSaveButtonClicked());
+//        return v;
+        FragmentServiceDetailBinding binding = DataBindingUtil
+                .inflate(inflater, R.layout.fragment_service_detail, container, false);
 
-        return v;
+        binding.serviceCancelButton.setOnClickListener(view -> getActivity().finish());
+        binding.serviceSaveButton.setOnClickListener(view -> onSaveButtonClicked());
+
+        if (savedInstanceState == null) {
+            serviceId = (Integer) getArguments().getSerializable(ARG_SERVICE_ID);
+            if (serviceId != null) {
+//            mButton.setText(R.string.update_button);
+                final ServiceDetailModel viewModel = ServiceDetailModel.getInstance(this, database, serviceId);
+//                viewModel.getService().observe(this, new Observer<Service>() {
+//                    @Override
+//                    public void onChanged(@Nullable Service service) {
+//                        viewModel.getService().removeObserver(this);
+//                        populateUI(service);
+//                    }
+//                });
+                binding.setViewModel(viewModel);
+                binding.setLifecycleOwner(this);
+            }
+        } else {
+            serviceId = (Integer) savedInstanceState.getSerializable(ARG_SERVICE_ID);
+        }
+
+        return binding.getRoot();
     }
 
     @Override
@@ -106,7 +116,7 @@ public class ServiceDetailFragment extends Fragment {
      * Inserts that new service data into the underlying database.
      */
     public void onSaveButtonClicked() {
-        final Service service = new Service();
+        final Service service = viewModel == null ? new Service(carId) : viewModel.getService().getValue();
 //        service.setName(name.getText().toString());
 //        Integer y = Formatter.parseInt(year.getText().toString());
 //        service.setModelYear(y);

@@ -29,7 +29,8 @@ public class Service {
 
     private int carId;
 
-    public Service() {
+    public Service(int carId) {
+        this.carId = carId;
         // required bo Room
     }
 

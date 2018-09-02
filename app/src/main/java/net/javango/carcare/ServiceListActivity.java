@@ -1,5 +1,6 @@
 package net.javango.carcare;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.support.v4.app.Fragment;
@@ -13,7 +14,7 @@ public class ServiceListActivity extends SingleFragmentActivity {
 
     @Override
     protected Fragment createFragment() {
-        Integer carId = (Integer) getIntent().getSerializableExtra(EXTRA_CAR_ID);
+        int carId = getIntent().getIntExtra(EXTRA_CAR_ID, -1);
         return ServiceListFragment.newInstance(carId);
     }
 
@@ -21,8 +22,8 @@ public class ServiceListActivity extends SingleFragmentActivity {
      * Creates an intent to open this activity
      * @param carId identifies the parent of services
      */
-    public static Intent newIntent(Context context, Integer carId) {
-        Intent intent = new Intent(context, CarDetailActivity.class);
+    public static Intent newIntent(Context context, int carId) {
+        Intent intent = new Intent(context, ServiceListActivity.class);
         intent.putExtra(EXTRA_CAR_ID, carId);
         return intent;
     }

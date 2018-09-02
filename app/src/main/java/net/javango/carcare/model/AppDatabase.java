@@ -10,7 +10,7 @@ import android.graphics.Movie;
 
 import net.javango.carcare.util.DateConverter;
 
-@Database(entities = {Car.class, Service.class}, version = 1, exportSchema = false)
+@Database(entities = {Car.class, Service.class}, version = 2, exportSchema = false)
 @TypeConverters(DateConverter.class)
 public abstract class AppDatabase extends RoomDatabase {
 

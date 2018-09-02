@@ -6,9 +6,10 @@
     <string name="car_tire_label">Tire Size</string>
     <string name="car_year_label">Model Year</string>
     <string name="cancel_button">Cancel</string>
-    <string name="save_button">Save</string>
+    <string name="add_button">Add</string>
     <string name="car_details">Car Details</string>
     <string name="edit_label">Edit</string>
     <string name="delete_label">Delete</string>
     <string name="service_details">Service Details</string>
+    <string name="update_button">Update</string>
 </resources>

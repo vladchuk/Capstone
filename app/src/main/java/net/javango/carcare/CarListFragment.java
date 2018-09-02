@@ -98,7 +98,7 @@ public class CarListFragment extends ListFragment {
     @Override
     public void onListItemClick(ListView l, View v, int position, long id) {
         Car car = (Car) getListAdapter().getItem(position);
-        Intent intent = CarDetailActivity.newIntent(getActivity(), car.getId());
+        Intent intent = ServiceListActivity.newIntent(getActivity(), car.getId());
         startActivity(intent);
     }
 

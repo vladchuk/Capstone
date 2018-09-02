@@ -52,12 +52,13 @@ public class CarDetailFragment extends Fragment {
         database = AppDatabase.getDatabase(getActivity());
         setHasOptionsMenu(true);
         getActivity().setTitle(R.string.car_details);
+    }
 
-
+    private void setupView(Bundle savedInstanceState) {
         if (savedInstanceState == null) {
             carId = (Integer) getArguments().getSerializable(ARG_CAR_ID);
             if (carId != null) {
-//            mButton.setText(R.string.update_button);
+                save.setText(R.string.update_button);
                 final CarDetailModel viewModel = CarDetailModel.getInstance(this, database, carId);
                 viewModel.getCar().observe(this, new Observer<Car>() {
                     @Override
@@ -85,6 +86,7 @@ public class CarDetailFragment extends Fragment {
         save = v.findViewById(R.id.car_save_button);
         save.setOnClickListener(view -> onSaveButtonClicked());
 
+        setupView(savedInstanceState);
         return v;
     }
 
