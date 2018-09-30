@@ -21,6 +21,8 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import net.javango.carcare.model.AppDatabase;
+import net.javango.carcare.model.Car;
+import net.javango.carcare.model.CarDetailModel;
 import net.javango.carcare.model.Service;
 import net.javango.carcare.model.ServiceListModel;
 import net.javango.carcare.util.TaskExecutor;
@@ -67,13 +69,11 @@ public class ServiceListFragment extends Fragment {
         recyclerView.setAdapter(serviceAdapter);
 
         int carId = getArguments().getInt(ARG_CAR_ID);
+        CarDetailModel carModel = CarDetailModel.getInstance(this, database, carId);
+        carModel.getCar().observe(this, (car) -> setTitle(car));
+
         ServiceListModel viewModel = ServiceListModel.getInstance(this, database, carId);
-        viewModel.getServices().observe(this, new Observer<List<Service>>() {
-            @Override
-            public void onChanged(@Nullable List<Service> cars) {
-                serviceAdapter.setData(cars);
-            }
-        });
+        viewModel.getServices().observe(this, cars -> serviceAdapter.setData(cars));
 
         // Add Service FAB
         FloatingActionButton fabButton = view.findViewById(R.id.service_add_button);
@@ -82,6 +82,11 @@ public class ServiceListFragment extends Fragment {
             startActivity(intent);
         });
         return view;
+    }
+
+    private void setTitle(Car car) {
+        String title = car.getName() + " - " + getActivity().getString(R.string.service_history);
+        getActivity().setTitle(title);
     }
 
 //    @Override

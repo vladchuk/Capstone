@@ -13,4 +13,5 @@
     <string name="service_details">Service Details</string>
     <string name="update_button">Update</string>
     <string name="miles"> miles</string>
+    <string name="service_history">Service History</string>
 </resources>
