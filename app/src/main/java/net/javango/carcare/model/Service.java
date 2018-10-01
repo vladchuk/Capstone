@@ -2,6 +2,7 @@ package net.javango.carcare.model;
 
 import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.ForeignKey;
+import android.arch.persistence.room.Index;
 import android.arch.persistence.room.PrimaryKey;
 
 import java.util.Date;
@@ -31,7 +32,7 @@ public class Service {
 
     public Service(int carId) {
         this.carId = carId;
-        // required bo Room
+        // required by Room
     }
 
     public int getId() {

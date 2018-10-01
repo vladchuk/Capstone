@@ -28,4 +28,10 @@ public class ServiceListActivity extends SingleFragmentActivity {
         return intent;
     }
 
+    public static Intent newFillInIntent(int carId) {
+        Intent intent = new Intent();
+        intent.putExtra(EXTRA_CAR_ID, carId);
+        return intent;
+    }
+
 }
