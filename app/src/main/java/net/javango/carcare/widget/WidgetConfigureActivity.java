@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
@@ -14,12 +15,10 @@ import net.javango.carcare.R;
 import net.javango.carcare.model.AppDatabase;
 import net.javango.carcare.model.Car;
 
-import java.util.List;
-
 /**
  * The configuration screen for the {@link Widget Widget} AppWidget.
  */
-public class WidgetConfigureActivity extends Activity {
+public class WidgetConfigureActivity extends AppCompatActivity {
 
     private static final String PREFS_NAME = "net.javango.carecare.widget.Widget";
     private static final String PREF_PREFIX_KEY = "widget_";
@@ -37,10 +36,11 @@ public class WidgetConfigureActivity extends Activity {
 
         setContentView(R.layout.widget_configure);
 
-        List<Car> cars = AppDatabase.getDatabase(this).carDao().getAll().getValue();
         carChoice = findViewById(R.id.car_choice);
-        ArrayAdapter<Car> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, cars);
-        carChoice.setAdapter(adapter);
+        AppDatabase.getDatabase(this).carDao().getAll().observe(this, cars -> {
+            ArrayAdapter<Car> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, cars);
+            carChoice.setAdapter(adapter);
+        });
 
         findViewById(R.id.add_button).setOnClickListener(mOnClickListener);
 

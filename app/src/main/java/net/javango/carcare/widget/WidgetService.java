@@ -76,19 +76,19 @@ public class WidgetService extends RemoteViewsService {
 
         @Override
         public void onDataSetChanged() {
-            serviceList = AppDatabase.getDatabase(context).serviceDao().getForCar(carId).getValue();
+            serviceList = AppDatabase.getDatabase(context).serviceDao().getForCarSync(carId);
         }
 
         @Override
         public RemoteViews getViewAt(int position) {
             final RemoteViews remoteView = new RemoteViews(
-                    context.getPackageName(), R.layout.item_service);
+                    context.getPackageName(), R.layout.widget_item_service);
             Service service = serviceList.get(position);
-            remoteView.setTextViewText(R.id.service_item_description, service.getDescription());
-            remoteView.setTextViewText(R.id.service_item_date, Formatter.format(service.getDate()));
+            remoteView.setTextViewText(R.id.widget_item_description, service.getDescription());
+            remoteView.setTextViewText(R.id.widget_item_date, Formatter.format(service.getDate()));
 
             Intent fillInIntent = ServiceListActivity.newFillInIntent(carId);
-            remoteView.setOnClickFillInIntent(R.id.service_item_description, fillInIntent);
+            remoteView.setOnClickFillInIntent(R.id.widget_item_description, fillInIntent);
             return remoteView;
         }
 

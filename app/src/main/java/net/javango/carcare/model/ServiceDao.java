@@ -11,6 +11,8 @@ import java.util.List;
 
 @Dao
 public interface ServiceDao {
+
+
     @Insert
     void addService(Service Service);
 
@@ -23,7 +25,12 @@ public interface ServiceDao {
     @Query(value = "select * from Service where id = :id")
     LiveData<Service> findById(int id);
 
-    @Query(value = "select * from Service where carId = :carId order by date desc")
+    static final String CAR_SERVICES = "select * from Service where carId = :carId order by date desc";
+
+    @Query(value = CAR_SERVICES)
     LiveData<List<Service>> getForCar(int carId);
+
+    @Query(value = CAR_SERVICES)
+    List<Service> getForCarSync(int carId);
 
 }

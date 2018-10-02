@@ -51,4 +51,8 @@ public class Car {
     public void setModelYear(Integer modelYear) {
         this.modelYear = modelYear;
     }
+
+    public String toString() {
+        return name;
+    }
 }
