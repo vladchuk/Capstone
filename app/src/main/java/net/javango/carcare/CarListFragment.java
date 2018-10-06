@@ -3,9 +3,11 @@ package net.javango.carcare;
 import android.app.Activity;
 import android.arch.lifecycle.Observer;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ListFragment;
+import android.util.Log;
 import android.view.ContextMenu;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -17,6 +19,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import net.javango.carcare.model.AppDatabase;
 import net.javango.carcare.model.Car;
@@ -67,9 +70,23 @@ public class CarListFragment extends ListFragment {
                 startActivity(intent);
                 return true;
             case R.id.search_service_stations:
-                return true;
+                openSearch();
             default:
                 return super.onOptionsItemSelected(item);
+        }
+    }
+
+    /**
+     * Open GM with local service stations
+     */
+    private void openSearch() {
+        Uri uri = Uri.parse("geo:0,0?q=mechanic");
+        Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+
+        if (intent.resolveActivity(getActivity().getPackageManager()) != null) {
+            startActivity(intent);
+        } else {
+            Toast.makeText(getContext(),"No location app installed!", Toast.LENGTH_LONG).show();
         }
     }
 
