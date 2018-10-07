@@ -19,8 +19,8 @@ public class CarListModel extends AndroidViewModel {
 
     private LiveData<List<Car>> cars;
 
-    // must be at least protected
-    protected CarListModel(Application application) {
+    // must be public
+    public CarListModel(Application application) {
         super(application);
         AppDatabase database = AppDatabase.getDatabase(this.getApplication());
         Log.d(TAG, "Retrieving cars from DATABASE!");

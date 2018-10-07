@@ -20,7 +20,7 @@ import net.javango.carcare.model.Car;
  */
 public class WidgetConfigureActivity extends AppCompatActivity {
 
-    private static final String PREFS_NAME = "net.javango.carecare.widget.Widget";
+    private static final String PREFS_NAME = "net.javango.carcare.widget.Widget";
     private static final String PREF_PREFIX_KEY = "widget_";
     private static final String PREF_PREFIX_NAME = "widget_name";
     int widgetId = AppWidgetManager.INVALID_APPWIDGET_ID;
