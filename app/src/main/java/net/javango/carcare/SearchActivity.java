@@ -58,47 +58,62 @@ public class SearchActivity extends FragmentActivity implements OnMapReadyCallba
             }
         });
 
+        // setup location manager
         locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+        if (checkPermission())
+            locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, this);
+    }
+
+    private boolean checkPermission() {
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager
                 .PERMISSION_GRANTED && ActivityCompat
                                                .checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION)
                                        != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, PERM_CODE);
+            return false;
         } else {
-            locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 1, 1, this);
+            return true;
         }
     }
 
+    // permission is checked for
     @SuppressLint("MissingPermission")
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[]
             grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        if (grantResults[0] == PackageManager.PERMISSION_GRANTED)
-            locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 1, 1, this);
+        if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED)
+            locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, this);
     }
 
     public void onLocationChanged(Location location) {
         if (gmap != null) {
-            LatLng current = new LatLng(location.getLatitude(), location.getLongitude());
-            gmap.moveCamera(CameraUpdateFactory.newLatLng(current));
+            setLocation(location);
             locationManager.removeUpdates(this);
         }
     }
 
     @Override
     public void onStatusChanged(String provider, int status, Bundle extras) {
-
+        // do nothing
     }
 
     @Override
     public void onProviderEnabled(String provider) {
-
+        // do nothing
     }
 
     @Override
     public void onProviderDisabled(String provider) {
+        // do nothing
+    }
 
+    // permission is checked for
+    @SuppressLint("MissingPermission")
+    private void setLocation(Location location) {
+        LatLng current = new LatLng(location.getLatitude(), location.getLongitude());
+        gmap.setMyLocationEnabled(true);
+        gmap.moveCamera(CameraUpdateFactory.newLatLngZoom(current, 12f));
     }
 
 
@@ -110,6 +125,9 @@ public class SearchActivity extends FragmentActivity implements OnMapReadyCallba
     public void onMapReady(GoogleMap googleMap) {
         gmap = googleMap;
         gmap.setMapType(GoogleMap.MAP_TYPE_NORMAL);
-        gmap.setMinZoomPreference(12);
+        if (checkPermission()) {
+            Location last = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
+            setLocation(last);
+        }
     }
 }
