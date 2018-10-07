@@ -81,7 +81,8 @@ public class CarListFragment extends ListFragment {
      */
     private void openSearch() {
         Uri uri = Uri.parse("geo:0,0?q=mechanic");
-        Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+//        Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+        Intent intent = new Intent(getContext(), SearchActivity.class);
 
         if (intent.resolveActivity(getActivity().getPackageManager()) != null) {
             startActivity(intent);

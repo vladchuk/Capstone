@@ -16,4 +16,5 @@
     <string name="service_history">Service History</string>
     <string name="select_car">Select a Car</string>
     <string name="add_widget">Add Widget</string>
+    <string name="title_activity_search">Search Service Locations</string>
 </resources>
