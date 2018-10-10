@@ -10,6 +10,7 @@ import java.util.Date;
 public class Formatter {
 
     private static final String SHORT_DATE_FORMAT = "M/d/yy";
+    private static final String DATE_FORMAT = "EEE, MMM d, yyyy";
 
     private Formatter() {
         // non-instantiable
@@ -44,7 +45,7 @@ public class Formatter {
     public static Date parseDate(String s) {
         if (s == null || s.length() == 0)
             return null;
-        SimpleDateFormat dateFormat = new SimpleDateFormat(SHORT_DATE_FORMAT);
+        SimpleDateFormat dateFormat = new SimpleDateFormat(DATE_FORMAT);
         try {
             return dateFormat.parse(s);
         } catch (ParseException e) {
@@ -53,15 +54,21 @@ public class Formatter {
     }
 
     /**
-     * Converts a date to string. If input is null, returns empty string
+     * Converts a date to string based on provided format. If input is null, returns empty string
      */
-    public static String format(Date date) {
+    private static String format(Date date, String format) {
         if (date == null)
             return "";
-        SimpleDateFormat dateFormat = new SimpleDateFormat(SHORT_DATE_FORMAT);
+        SimpleDateFormat dateFormat = new SimpleDateFormat(format);
         return dateFormat.format(date);
     }
 
+    public static String format(Date date) {
+        return format(date, SHORT_DATE_FORMAT);
+    }
 
+    public static String formatFull(Date date) {
+        return format(date, DATE_FORMAT);
+    }
 
 }
