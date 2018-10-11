@@ -1,11 +1,15 @@
 package net.javango.carcare;
 
 import android.arch.lifecycle.Observer;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -54,6 +58,27 @@ public class CarDetailFragment extends Fragment {
         getActivity().setTitle(R.string.car_details);
     }
 
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        super.onCreateOptionsMenu(menu, inflater);
+        inflater.inflate(R.menu.fragment_car_detail, menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.car_save:
+                saveCar();
+                break;
+            case R.id.car_delete:
+                if (carId != null)
+                    TaskExecutor.executeDisk(() -> AppDatabase.getDatabase(getContext()).carDao().deleteById(carId));
+                break;
+        }
+        getActivity().finish();
+        return true;
+    }
+
     private void setupView(Bundle savedInstanceState) {
         if (savedInstanceState == null) {
             carId = (Integer) getArguments().getSerializable(ARG_CAR_ID);
@@ -85,7 +110,7 @@ public class CarDetailFragment extends Fragment {
         cancel = v.findViewById(R.id.car_cancel_button);
         cancel.setOnClickListener(view -> getActivity().finish());
         save = v.findViewById(R.id.car_save_button);
-        save.setOnClickListener(view -> onSaveButtonClicked());
+        save.setOnClickListener(view -> saveCar());
 
         setupView(savedInstanceState);
         return v;
@@ -104,9 +129,9 @@ public class CarDetailFragment extends Fragment {
     }
 
     /**
-     * Inserts that new car data into the underlying database.
+     * Saves new car data into the underlying database.
      */
-    public void onSaveButtonClicked() {
+    private void saveCar() {
         final Car car = new Car();
         car.setName(name.getText().toString());
         Integer y = Formatter.parseInt(year.getText().toString());

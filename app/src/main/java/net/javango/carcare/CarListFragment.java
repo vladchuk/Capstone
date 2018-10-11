@@ -53,7 +53,16 @@ public class CarListFragment extends ListFragment {
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        registerForContextMenu(getListView());
+        //registerForContextMenu(getListView());
+        getListView().setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+                Car car = (Car) getListAdapter().getItem(position);
+                Intent intent = CarDetailActivity.newIntent(getActivity(), car.getId());
+                startActivity(intent);
+                return true;
+            }
+        });
     }
 
     @Override

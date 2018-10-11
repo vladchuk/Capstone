@@ -26,7 +26,11 @@ public interface CarDao {
     @Query(value = "select * from car where id = :id")
     LiveData<Car> findById(int id);
 
+    @Query(value = "delete from car where id = :id")
+    void deleteById(int id);
+
     @Query(value = "select * from car order by name")
     LiveData<List<Car>> getAll();
+
 
 }
