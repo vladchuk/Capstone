@@ -19,6 +19,9 @@ public interface ServiceDao {
     @Delete
     void deleteService(Service Service);
 
+    @Query(value = "delete from service where id = :id")
+    void deleteById(int id);
+
     @Update
     void updateService(Service Service);
 

@@ -14,6 +14,9 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.content.FileProvider;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -75,8 +78,8 @@ public class ServiceDetailFragment extends Fragment {
         binding = DataBindingUtil
                 .inflate(inflater, R.layout.fragment_service_detail, container, false);
 
-        binding.serviceCancelButton.setOnClickListener(view -> getActivity().finish());
-        binding.serviceSaveButton.setOnClickListener(view -> onSaveButtonClicked());
+//        binding.serviceCancelButton.setOnClickListener(view -> getActivity().finish());
+//        binding.serviceSaveButton.setOnClickListener(view -> onSaveButtonClicked());
         binding.serviceDetailDateValue.setOnClickListener(view -> {
             FragmentManager manager = getFragmentManager();
             String title = getString(R.string.date_of_service);
@@ -103,7 +106,7 @@ public class ServiceDetailFragment extends Fragment {
         } else {
             serviceId = (Integer) savedInstanceState.getSerializable(ARG_SERVICE_ID);
         }
-        binding.serviceSaveButton.setText(serviceId == null ? R.string.add_button : R.string.update_button);
+//        binding.serviceSaveButton.setText(serviceId == null ? R.string.add_button : R.string.update_button);
         return binding.getRoot();
     }
 
@@ -111,6 +114,26 @@ public class ServiceDetailFragment extends Fragment {
     public void onSaveInstanceState(Bundle outState) {
         outState.putSerializable(ARG_SERVICE_ID, serviceId);
         super.onSaveInstanceState(outState);
+    }
+
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        super.onCreateOptionsMenu(menu, inflater);
+        inflater.inflate(R.menu.fragment_service_detail, menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.service_save:
+                saveService();
+                break;
+            case R.id.service_delete:
+                if (serviceId != null)
+                    TaskExecutor.executeDisk(() -> AppDatabase.getDatabase(getContext()).serviceDao().deleteById(serviceId));
+                break;
+        }
+        getActivity().finish();
+        return true;
     }
 
     private void populateUI(Service service) {
@@ -137,7 +160,7 @@ public class ServiceDetailFragment extends Fragment {
     /**
      * Inserts that new service data into the underlying database.
      */
-    public void onSaveButtonClicked() {
+    public void saveService() {
         Service service = new Service(carId);
         populateService(service);
 
