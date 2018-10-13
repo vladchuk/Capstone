@@ -26,4 +26,5 @@ public class CarDetailActivity extends SingleFragmentActivity {
         intent.putExtra(EXTRA_CAR_ID, carId);
         return intent;
     }
+
 }

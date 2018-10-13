@@ -85,7 +85,7 @@ public class ServiceListFragment extends Fragment {
     }
 
     private void setTitle(Car car) {
-        String title = car.getName() + " - " + getActivity().getString(R.string.service_history);
+        String title = car.getName(); // + " - " + getActivity().getString(R.string.service_history);
         getActivity().setTitle(title);
     }
 
