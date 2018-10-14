@@ -1,18 +1,18 @@
 package net.javango.carcare;
 
 import android.arch.lifecycle.Observer;
-import android.content.Intent;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.EditText;
 
 import net.javango.carcare.model.AppDatabase;
@@ -31,7 +31,7 @@ public class CarDetailFragment extends Fragment {
     private EditText name;
     private EditText year;
     private EditText tire;
-//    private Button cancel;
+    //    private Button cancel;
 //    private Button save;
     private AppDatabase database;
     private Integer carId;
@@ -69,14 +69,31 @@ public class CarDetailFragment extends Fragment {
         switch (item.getItemId()) {
             case R.id.car_save:
                 saveCar();
+                getActivity().finish();
                 break;
             case R.id.car_delete:
-                if (carId != null)
-                    TaskExecutor.executeDisk(() -> AppDatabase.getDatabase(getContext()).carDao().deleteById(carId));
+                showDeleteDialg();
                 break;
         }
-        getActivity().finish();
         return true;
+    }
+
+    private void deleteCar() {
+        if (carId != null)
+            TaskExecutor.executeDisk(() -> AppDatabase.getDatabase(getContext()).carDao().deleteById(carId));
+    }
+
+    private void showDeleteDialg() {
+        new AlertDialog.Builder(getActivity())
+                .setMessage(R.string.car_delete_message)
+                .setPositiveButton(android.R.string.ok, (dialog, which) -> {
+                        getActivity().finish();
+                        deleteCar();
+                })
+                .setNegativeButton(android.R.string.cancel, (dialog, which) -> {
+                    // do nothing
+                })
+                .show();
     }
 
     private void setupView(Bundle savedInstanceState) {
