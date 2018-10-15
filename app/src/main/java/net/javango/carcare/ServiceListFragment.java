@@ -1,33 +1,19 @@
 package net.javango.carcare;
 
-import android.arch.lifecycle.Observer;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.view.ContextMenu;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.ListView;
-import android.widget.TextView;
 
 import net.javango.carcare.model.AppDatabase;
 import net.javango.carcare.model.Car;
 import net.javango.carcare.model.CarDetailModel;
-import net.javango.carcare.model.Service;
 import net.javango.carcare.model.ServiceListModel;
-import net.javango.carcare.util.TaskExecutor;
-
-import java.util.List;
 
 public class ServiceListFragment extends Fragment {
 
@@ -69,16 +55,14 @@ public class ServiceListFragment extends Fragment {
         recyclerView.setAdapter(serviceAdapter);
 
         int carId = getArguments().getInt(ARG_CAR_ID);
-        CarDetailModel carModel = CarDetailModel.getInstance(this, database, carId);
-        carModel.getCar().observe(this, (car) -> setTitle(car));
-
-        ServiceListModel viewModel = ServiceListModel.getInstance(this, database, carId);
-        viewModel.getServices().observe(this, cars -> serviceAdapter.setData(cars));
+        CarDetailModel.getInstance(this, database, carId).getCar().observe(this, (car) -> setTitle(car));
+        ServiceListModel.getInstance(this, database, carId).getServices()
+                .observe(this, cars -> serviceAdapter.setData(cars));
 
         // Add Service FAB
         FloatingActionButton fabButton = view.findViewById(R.id.service_add_button);
         fabButton.setOnClickListener(v -> {
-            Intent intent = ServiceDetailActivity.newIntent(getContext(), carId,null);
+            Intent intent = ServiceDetailActivity.newIntent(getContext(), carId, null);
             startActivity(intent);
         });
         return view;

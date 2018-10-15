@@ -22,6 +22,8 @@ import android.view.ViewGroup;
 
 import net.javango.carcare.databinding.FragmentServiceDetailBinding;
 import net.javango.carcare.model.AppDatabase;
+import net.javango.carcare.model.Car;
+import net.javango.carcare.model.CarDetailModel;
 import net.javango.carcare.model.Service;
 import net.javango.carcare.model.ServiceDetailModel;
 import net.javango.carcare.util.Formatter;
@@ -80,16 +82,8 @@ public class ServiceDetailFragment extends Fragment {
 
 //        binding.serviceCancelButton.setOnClickListener(view -> getActivity().finish());
 //        binding.serviceSaveButton.setOnClickListener(view -> onSaveButtonClicked());
-        binding.serviceDetailDateValue.setOnClickListener(view -> {
-            FragmentManager manager = getFragmentManager();
-            String title = getString(R.string.date_of_service);
-            Date date = Formatter.parseDate(binding.serviceDetailDateValue.getText().toString());
-            if (date == null)
-                date = new Date();
-            DatePickerFragment dialog = DatePickerFragment.newInstance(title, date);
-            dialog.setTargetFragment(ServiceDetailFragment.this, REQUEST_DATE);
-            dialog.show(manager, DIALOG_DATE);
-        });
+        binding.serviceDetailDateValue.setOnClickListener(view -> showDatePicker());
+
 
         if (savedInstanceState == null) {
             serviceId = (Integer) getArguments().getSerializable(ARG_SERVICE_ID);
@@ -107,7 +101,24 @@ public class ServiceDetailFragment extends Fragment {
             serviceId = (Integer) savedInstanceState.getSerializable(ARG_SERVICE_ID);
         }
 //        binding.serviceSaveButton.setText(serviceId == null ? R.string.add_button : R.string.update_button);
+        CarDetailModel.getInstance(this, database, carId).getCar().observe(this, (car) -> setTitle(car));
         return binding.getRoot();
+    }
+
+    private void showDatePicker() {
+        FragmentManager manager = getFragmentManager();
+        String title = getString(R.string.date_of_service);
+        Date date = Formatter.parseDate(binding.serviceDetailDateValue.getText().toString());
+        if (date == null)
+            date = new Date();
+        DatePickerFragment dialog = DatePickerFragment.newInstance(title, date);
+        dialog.setTargetFragment(ServiceDetailFragment.this, REQUEST_DATE);
+        dialog.show(manager, DIALOG_DATE);
+    }
+
+    private void setTitle(Car car) {
+        String title = car.getName();
+        getActivity().setTitle(title);
     }
 
     @Override
