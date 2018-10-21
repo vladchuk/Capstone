@@ -70,12 +70,12 @@ public class CarDetailFragment extends Fragment {
             case R.id.car_save:
                 saveCar();
                 getActivity().finish();
-                break;
+                return true;
             case R.id.car_delete:
                 showDeleteDialg();
-                break;
+                return true;
         }
-        return true;
+        return super.onOptionsItemSelected(item);
     }
 
     private void deleteCar() {

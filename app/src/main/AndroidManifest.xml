@@ -21,7 +21,6 @@
         <activity android:name=".CarListActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
-
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
@@ -35,7 +34,7 @@
         </activity>
         <activity
             android:name=".ServiceDetailActivity"
-            android:parentActivityName=".ServiceListActivity">
+            android:parentActivityName=".CarListActivity">
         </activity>
 
         <receiver android:name=".widget.Widget">

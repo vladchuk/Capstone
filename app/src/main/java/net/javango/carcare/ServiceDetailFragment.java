@@ -12,6 +12,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.support.v4.app.NavUtils;
 import android.support.v4.content.FileProvider;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -135,6 +136,9 @@ public class ServiceDetailFragment extends Fragment {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
+            case android.R.id.home:
+                NavUtils.navigateUpFromSameTask(getActivity());
+                return true;
             case R.id.service_save:
                 saveService();
                 break;
