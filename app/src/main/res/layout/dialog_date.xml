@@ -3,6 +3,8 @@
             android:id="@+id/dialog_date_picker"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:calendarViewShown="false">
+            android:calendarViewShown="false"
+            android:scaleX="1.05"
+            android:scaleY="1.05">
 
 </DatePicker>

@@ -112,7 +112,7 @@ public class ServiceDetailFragment extends Fragment {
         Date date = Formatter.parseDate(binding.serviceDetailDateValue.getText().toString());
         if (date == null)
             date = new Date();
-        DatePickerFragment dialog = DatePickerFragment.newInstance(title, date);
+        DatePickerFragment dialog = DatePickerFragment.newInstance(null, date);
         dialog.setTargetFragment(ServiceDetailFragment.this, REQUEST_DATE);
         dialog.show(manager, DIALOG_DATE);
     }
