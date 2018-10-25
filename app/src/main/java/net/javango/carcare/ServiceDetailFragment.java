@@ -77,14 +77,10 @@ public class ServiceDetailFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle
             savedInstanceState) {
-//        View v = inflater.inflate(R.layout.fragment_service_detail, container, false);
         binding = DataBindingUtil
                 .inflate(inflater, R.layout.fragment_service_detail, container, false);
 
-//        binding.serviceCancelButton.setOnClickListener(view -> getActivity().finish());
-//        binding.serviceSaveButton.setOnClickListener(view -> onSaveButtonClicked());
         binding.serviceDetailDateValue.setOnClickListener(view -> showDatePicker());
-
 
         if (savedInstanceState == null) {
             serviceId = (Integer) getArguments().getSerializable(ARG_SERVICE_ID);
@@ -101,7 +97,6 @@ public class ServiceDetailFragment extends Fragment {
         } else {
             serviceId = (Integer) savedInstanceState.getSerializable(ARG_SERVICE_ID);
         }
-//        binding.serviceSaveButton.setText(serviceId == null ? R.string.add_button : R.string.update_button);
         CarDetailModel.getInstance(this, database, carId).getCar().observe(this, (car) -> setTitle(car));
         return binding.getRoot();
     }

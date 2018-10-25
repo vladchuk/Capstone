@@ -31,8 +31,6 @@ public class CarDetailFragment extends Fragment {
     private EditText name;
     private EditText year;
     private EditText tire;
-    //    private Button cancel;
-//    private Button save;
     private AppDatabase database;
     private Integer carId;
 
@@ -100,7 +98,6 @@ public class CarDetailFragment extends Fragment {
         if (savedInstanceState == null) {
             carId = (Integer) getArguments().getSerializable(ARG_CAR_ID);
             if (carId != null) {
-//                save.setText(R.string.update_button);
                 final CarDetailModel viewModel = CarDetailModel.getInstance(this, database, carId);
                 viewModel.getCar().observe(this, new Observer<Car>() {
                     @Override
@@ -113,7 +110,6 @@ public class CarDetailFragment extends Fragment {
         } else {
             carId = (Integer) savedInstanceState.getSerializable(ARG_CAR_ID);
         }
-//        save.setText(carId == null ? R.string.add_button : R.string.update_button);
     }
 
     @Override
@@ -124,10 +120,6 @@ public class CarDetailFragment extends Fragment {
         name = v.findViewById(R.id.car_name_value);
         year = v.findViewById(R.id.car_year_value);
         tire = v.findViewById(R.id.car_tire_value);
-//        cancel = v.findViewById(R.id.car_cancel_button);
-//        cancel.setOnClickListener(view -> getActivity().finish());
-//        save = v.findViewById(R.id.car_save_button);
-//        save.setOnClickListener(view -> saveCar());
 
         setupView(savedInstanceState);
         return v;
