@@ -78,8 +78,8 @@ public class CarListFragment extends ListFragment {
                 Intent intent = CarDetailActivity.newIntent(getActivity(), null);
                 startActivity(intent);
                 return true;
-            case R.id.search_service_stations:
-                openSearch();
+//            case R.id.search_service_stations:
+//                openSearch();
             default:
                 return super.onOptionsItemSelected(item);
         }

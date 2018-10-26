@@ -8,7 +8,6 @@ import android.arch.persistence.room.PrimaryKey;
  * Represents a vehicle in user's garage
  */
 @Entity
-//(indices = {@Index(value = {"name"}, unique = true)})
 public class Car {
     @PrimaryKey(autoGenerate = true)
     private int id;

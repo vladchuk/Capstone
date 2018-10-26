@@ -5,8 +5,8 @@
         android:id="@+id/new_car"
         android:title="@string/new_car"/>
 
-    <item
+    <!--<item
         android:id="@+id/search_service_stations"
-        android:title="@string/search_service_stations"/>
+        android:title="@string/search_service_stations"/>-->
 
 </menu>

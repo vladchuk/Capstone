@@ -12,10 +12,15 @@ import static android.arch.persistence.room.ForeignKey.CASCADE;
 /**
  * A service (maintenance) done to a car
  */
-@Entity(foreignKeys = @ForeignKey(entity = Car.class,
-        parentColumns = "id",
-        childColumns = "carId",
-        onDelete = CASCADE))
+@Entity(
+        indices = @Index("carId"),
+        foreignKeys =
+        @ForeignKey(
+                entity = Car.class,
+                parentColumns = "id",
+                childColumns = "carId",
+                onDelete = CASCADE)
+)
 public class Service {
     @PrimaryKey(autoGenerate = true)
     private int id;
