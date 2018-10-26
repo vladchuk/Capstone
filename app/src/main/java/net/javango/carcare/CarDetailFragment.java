@@ -20,6 +20,7 @@ import net.javango.carcare.model.Car;
 import net.javango.carcare.model.CarDetailModel;
 import net.javango.carcare.util.Formatter;
 import net.javango.carcare.util.TaskExecutor;
+import net.javango.common.comp.TwoChoiceDialog;
 
 /**
  * Handles {@code Car} UI. Used to insert, update or delete cars.
@@ -82,16 +83,16 @@ public class CarDetailFragment extends Fragment {
     }
 
     private void showDeleteDialg() {
-        new AlertDialog.Builder(getActivity())
-                .setMessage(R.string.car_delete_message)
-                .setPositiveButton(android.R.string.ok, (dialog, which) -> {
-                        getActivity().finish();
-                        deleteCar();
-                })
-                .setNegativeButton(android.R.string.cancel, (dialog, which) -> {
-                    // do nothing
-                })
-                .show();
+        String message = getString(R.string.car_delete_message);
+        TwoChoiceDialog dialog = TwoChoiceDialog.create(null, message, new TwoChoiceDialog.ChoiceListener() {
+
+            @Override
+            public void onPositiveChoice() {
+                deleteCar();
+                getActivity().finish();
+            }
+        });
+        dialog.show(getFragmentManager(), "Delete Car Confirm");
     }
 
     private void setupView(Bundle savedInstanceState) {
@@ -162,4 +163,5 @@ public class CarDetailFragment extends Fragment {
             }
         });
     }
+
 }
