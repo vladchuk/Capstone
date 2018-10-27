@@ -21,4 +21,6 @@
     <string name="save">Save</string>
     <string name="delete">Delete</string>
     <string name="car_delete_message">Are you sure you want to delete this car?</string>
+    <string name="export_data">Export Data</string>
+    <string name="import_data">Import Data</string>
 </resources>
