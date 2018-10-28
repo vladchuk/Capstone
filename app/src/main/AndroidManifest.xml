@@ -14,7 +14,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".CarListActivity">
+        <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
                 <category android:name="android.intent.category.LAUNCHER"/>
@@ -22,15 +22,15 @@
         </activity>
         <activity
             android:name=".CarDetailActivity"
-            android:parentActivityName=".CarListActivity">
+            android:parentActivityName=".MainActivity">
         </activity>
         <activity
             android:name=".ServiceListActivity"
-            android:parentActivityName=".CarListActivity">
+            android:parentActivityName=".MainActivity">
         </activity>
         <activity
             android:name=".ServiceDetailActivity"
-            android:parentActivityName=".CarListActivity">
+            android:parentActivityName=".MainActivity">
         </activity>
 
         <receiver android:name=".widget.Widget">

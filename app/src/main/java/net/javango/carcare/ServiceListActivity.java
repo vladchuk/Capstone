@@ -1,13 +1,9 @@
 package net.javango.carcare;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.support.v4.app.Fragment;
-
-import net.javango.carcare.CarListFragment;
-import net.javango.carcare.SingleFragmentActivity;
 
 public class ServiceListActivity extends SingleFragmentActivity {
 

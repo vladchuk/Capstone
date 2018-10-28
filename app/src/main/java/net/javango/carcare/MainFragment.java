@@ -34,7 +34,7 @@ import net.javango.common.util.Util;
 import java.io.File;
 import java.util.List;
 
-public class CarListFragment extends ListFragment {
+public class MainFragment extends ListFragment {
 
     private static final int MENU_CONTEXT_EDIT_ID = 1;
     private static final int MENU_CONTEXT_DELETE_ID = 2;
@@ -218,7 +218,7 @@ public class CarListFragment extends ListFragment {
                             File backupFile = getBackupFile();
                             File dbFile = AppDatabase.getDatabase(getContext()).getPath();
                             Util.copy(backupFile, dbFile);
-                            Intent intent = new Intent(getContext(), CarListActivity.class);
+                            Intent intent = new Intent(getContext(), MainActivity.class);
                             startActivity(intent);
                             getActivity().finish();
                             Toast.makeText(getContext(), "Imported data from " + backupFile, Toast.LENGTH_LONG).show();
