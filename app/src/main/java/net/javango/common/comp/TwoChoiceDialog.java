@@ -4,6 +4,7 @@ import android.app.Dialog;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
+import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
 
 import net.javango.carcare.R;
@@ -35,8 +36,12 @@ public class TwoChoiceDialog extends DialogFragment {
         public abstract void onPositiveChoice();
 
         public void onNegativeChoice() {
-            // noop
+            // by default, do nothing
         }
+    }
+
+    public static TwoChoiceDialog create(Fragment parent, int titleId, int messageId, ChoiceListener choiceListener) {
+        return create(parent.getString(titleId), parent.getString(messageId), choiceListener);
     }
 
     public static TwoChoiceDialog create(String title, String message, ChoiceListener choiceListener) {

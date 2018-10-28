@@ -18,7 +18,7 @@ import java.io.File;
 @TypeConverters(DateConverter.class)
 public abstract class AppDatabase extends RoomDatabase {
 
-    private static final String NAME = "CARCARE_DB";
+    public static final String NAME = "CARCARE_DB";
 
     private static AppDatabase DB;
     private static File dbPath;
@@ -36,15 +36,13 @@ public abstract class AppDatabase extends RoomDatabase {
         return DB;
     }
 
-    public void checkpoint() {
-        try (Cursor c = DB.query("pragma wal_checkpoint(full)", null)) {
-            if (c.moveToFirst() && c.getInt(0) == 1)
-                throw new RuntimeException("Checkpoint was blocked from completing");
-        }
-    }
-
     public File getPath() {
         return dbPath;
+    }
+
+    public void close() {
+        super.close();
+        DB = null;
     }
 
 }

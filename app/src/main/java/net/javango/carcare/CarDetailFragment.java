@@ -1,12 +1,10 @@
 package net.javango.carcare;
 
 import android.arch.lifecycle.Observer;
-import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -83,16 +81,16 @@ public class CarDetailFragment extends Fragment {
     }
 
     private void showDeleteDialg() {
-        String message = getString(R.string.car_delete_message);
-        TwoChoiceDialog dialog = TwoChoiceDialog.create(null, message, new TwoChoiceDialog.ChoiceListener() {
+        TwoChoiceDialog dialog = TwoChoiceDialog
+                .create(this, R.string.delete, R.string.car_delete_message, new TwoChoiceDialog.ChoiceListener() {
 
-            @Override
-            public void onPositiveChoice() {
-                deleteCar();
-                getActivity().finish();
-            }
-        });
-        dialog.show(getFragmentManager(), "Delete Car Confirm");
+                    @Override
+                    public void onPositiveChoice() {
+                        deleteCar();
+                        getActivity().finish();
+                    }
+                });
+        dialog.show(getFragmentManager(), "delete-car-confirm");
     }
 
     private void setupView(Bundle savedInstanceState) {
