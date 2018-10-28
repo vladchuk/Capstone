@@ -22,17 +22,16 @@ public class ServiceListModel extends ViewModel {
     }
 
     /**
-     * Factory method in obtain an instance of this model by carId
+     * Factory method to obtain an instance of this model by carId
      */
     public static ServiceListModel getInstance(Fragment fragment, AppDatabase db, int carId) {
-        fragment.getActivity().getApplication();
         ServiceModelFactory factory = new ServiceModelFactory(db, carId);
         ServiceListModel viewModel = ViewModelProviders.of(fragment, factory).get(ServiceListModel.class);
         return viewModel;
     }
 
     // required because services are looked up by carId
-    private static class ServiceModelFactory extends ViewModelProvider.NewInstanceFactory {
+    private static class ServiceModelFactory implements ViewModelProvider.Factory {
 
         private final AppDatabase db;
         private final int carId;

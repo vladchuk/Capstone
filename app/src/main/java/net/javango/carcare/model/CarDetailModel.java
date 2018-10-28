@@ -20,16 +20,15 @@ public class CarDetailModel extends ViewModel {
     }
 
     /**
-     * Factory method in obtain an instance of this model by carId
+     * Factory method to obtain an instance of this model by carId
      */
     public static CarDetailModel getInstance(Fragment fragment, AppDatabase db, int carId) {
-        fragment.getActivity().getApplication();
         CarModelFactory factory = new CarModelFactory(db, carId);
         CarDetailModel viewModel = ViewModelProviders.of(fragment, factory).get(CarDetailModel.class);
         return viewModel;
     }
 
-    private static class CarModelFactory extends ViewModelProvider.NewInstanceFactory {
+    private static class CarModelFactory implements ViewModelProvider.Factory {
 
         private final AppDatabase db;
         private final int carId;
