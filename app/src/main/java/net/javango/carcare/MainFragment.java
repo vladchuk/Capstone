@@ -40,6 +40,8 @@ public class MainFragment extends ListFragment {
     private static final int MENU_CONTEXT_DELETE_ID = 2;
 
     private static final int PERM_CODE_STORAGE = 32;
+    // make this configurable via settings?
+    private static final String BACKUP_FILE = "backup/" + AppDatabase.NAME;
 
 
     @Override
@@ -201,10 +203,10 @@ public class MainFragment extends ListFragment {
             File dbFile = AppDatabase.getDatabase(getContext()).getPath();
             File backupFile = getBackupFile();
             Util.copy(dbFile, backupFile);
-            Toast.makeText(getContext(), "Exported data to " + backupFile, Toast.LENGTH_LONG).show();
+            Toast.makeText(getContext(), String.format("Exported data to '%s'", BACKUP_FILE), Toast.LENGTH_LONG).show();
         } catch (Exception e) {
             Log.e("SAVEDB", e.toString());
-            Toast.makeText(getContext(), "Failed to copy data!", Toast.LENGTH_LONG).show();
+            Toast.makeText(getContext(), "Failed to export data: " + e.getMessage(), Toast.LENGTH_LONG).show();
         }
     }
 
@@ -221,10 +223,10 @@ public class MainFragment extends ListFragment {
                             Intent intent = new Intent(getContext(), MainActivity.class);
                             startActivity(intent);
                             getActivity().finish();
-                            Toast.makeText(getContext(), "Imported data from " + backupFile, Toast.LENGTH_LONG).show();
+                            Toast.makeText(getContext(), String.format("Imported data from '%s'", BACKUP_FILE), Toast.LENGTH_LONG).show();
                         } catch (Exception e) {
                             Log.e("RESTOREDB", e.toString());
-                            Toast.makeText(getContext(), "Failed to copy data!", Toast.LENGTH_LONG).show();
+                            Toast.makeText(getContext(), "Failed to import data: " + e.getLocalizedMessage(), Toast.LENGTH_LONG).show();
                         }
                     }
                 });
@@ -232,9 +234,10 @@ public class MainFragment extends ListFragment {
     }
 
     private File getBackupFile() {
-        File file = new File(Environment.getExternalStoragePublicDirectory(
-                Environment.DIRECTORY_DOWNLOADS), AppDatabase.NAME);
-        return file;
+        File storage = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS);
+        File backup = new File(storage.getParent(), BACKUP_FILE);
+        backup.getParentFile().mkdir();
+        return backup;
     }
 
 }
