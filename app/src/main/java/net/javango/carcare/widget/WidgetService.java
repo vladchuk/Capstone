@@ -76,7 +76,7 @@ public class WidgetService extends RemoteViewsService {
 
         @Override
         public void onDataSetChanged() {
-            serviceList = AppDatabase.getDatabase(context).serviceDao().getForCarSync(carId);
+            serviceList = AppDatabase.getDatabase().serviceDao().getForCarSync(carId);
         }
 
         @Override

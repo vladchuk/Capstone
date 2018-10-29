@@ -10,6 +10,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.graphics.Movie;
 
+import net.javango.carcare.App;
 import net.javango.carcare.util.DateConverter;
 
 import java.io.File;
@@ -27,8 +28,9 @@ public abstract class AppDatabase extends RoomDatabase {
 
     public abstract ServiceDao serviceDao();
 
-    public static AppDatabase getDatabase(Context context) {
+    public static AppDatabase getDatabase() {
         if (DB == null) {
+            Context context = App.getContext();
             dbPath = context.getDatabasePath(NAME);
             DB = Room.databaseBuilder(context, AppDatabase.class, NAME)
                     .build();

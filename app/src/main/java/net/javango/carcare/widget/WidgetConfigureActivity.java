@@ -37,7 +37,7 @@ public class WidgetConfigureActivity extends AppCompatActivity {
         setContentView(R.layout.widget_configure);
 
         carChoice = findViewById(R.id.car_choice);
-        AppDatabase.getDatabase(this).carDao().getAll().observe(this, cars -> {
+        AppDatabase.getDatabase().carDao().getAll().observe(this, cars -> {
             ArrayAdapter<Car> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, cars);
             carChoice.setAdapter(adapter);
         });

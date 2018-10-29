@@ -43,7 +43,7 @@ public class ServiceListFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
-        database = AppDatabase.getDatabase(getContext());
+        database = AppDatabase.getDatabase();
     }
 
     @Override

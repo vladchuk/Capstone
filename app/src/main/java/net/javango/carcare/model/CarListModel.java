@@ -12,7 +12,7 @@ import android.util.Log;
 
 import java.util.List;
 
-public class CarListModel extends AndroidViewModel {
+public class CarListModel extends ViewModel {
 
     // Constant for logging
     private static final String TAG = CarListModel.class.getSimpleName();
@@ -20,9 +20,8 @@ public class CarListModel extends AndroidViewModel {
     private LiveData<List<Car>> cars;
 
     // must be public
-    public CarListModel(Application application) {
-        super(application);
-        AppDatabase database = AppDatabase.getDatabase(this.getApplication());
+    public CarListModel() {
+        AppDatabase database = AppDatabase.getDatabase();
         Log.d(TAG, "Retrieving cars from DATABASE!");
         cars = database.carDao().getAll();
     }

@@ -132,7 +132,7 @@ public class MainFragment extends ListFragment {
                 startActivity(intent);
                 return true;
             case MENU_CONTEXT_DELETE_ID:
-                TaskExecutor.executeDisk(() -> AppDatabase.getDatabase(getContext()).carDao().deleteCar(car));
+                TaskExecutor.executeDisk(() -> AppDatabase.getDatabase().carDao().deleteCar(car));
             default:
                 return super.onContextItemSelected(item);
         }
@@ -199,8 +199,8 @@ public class MainFragment extends ListFragment {
 
     private void exportData() {
         try {
-            AppDatabase.getDatabase(getContext()).close();
-            File dbFile = AppDatabase.getDatabase(getContext()).getPath();
+            AppDatabase.getDatabase().close();
+            File dbFile = AppDatabase.getDatabase().getPath();
             File backupFile = getBackupFile();
             Util.copy(dbFile, backupFile);
             Toast.makeText(getContext(), String.format("Exported data to '%s'", BACKUP_FILE), Toast.LENGTH_LONG).show();
@@ -216,9 +216,9 @@ public class MainFragment extends ListFragment {
                     @Override
                     public void onPositiveChoice() {
                         try {
-                            AppDatabase.getDatabase(getContext()).close();
+                            AppDatabase.getDatabase().close();
                             File backupFile = getBackupFile();
-                            File dbFile = AppDatabase.getDatabase(getContext()).getPath();
+                            File dbFile = AppDatabase.getDatabase().getPath();
                             Util.copy(backupFile, dbFile);
                             Intent intent = new Intent(getContext(), MainActivity.class);
                             startActivity(intent);

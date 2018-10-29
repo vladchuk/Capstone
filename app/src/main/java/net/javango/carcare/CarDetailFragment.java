@@ -50,7 +50,7 @@ public class CarDetailFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        database = AppDatabase.getDatabase(getActivity());
+        database = AppDatabase.getDatabase();
         setHasOptionsMenu(true);
         getActivity().setTitle(R.string.car_details);
     }
@@ -77,7 +77,7 @@ public class CarDetailFragment extends Fragment {
 
     private void deleteCar() {
         if (carId != null)
-            TaskExecutor.executeDisk(() -> AppDatabase.getDatabase(getContext()).carDao().deleteById(carId));
+            TaskExecutor.executeDisk(() -> AppDatabase.getDatabase().carDao().deleteById(carId));
     }
 
     private void showDeleteDialg() {

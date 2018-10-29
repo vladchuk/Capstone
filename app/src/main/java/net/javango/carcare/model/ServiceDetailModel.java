@@ -11,8 +11,8 @@ public class ServiceDetailModel extends ViewModel {
     private LiveData<Service> service;
 
     // must be at least protected
-    protected ServiceDetailModel(AppDatabase database, int serviceId) {
-        service = database.serviceDao().findById(serviceId);
+    protected ServiceDetailModel(int serviceId) {
+        service = AppDatabase.getDatabase().serviceDao().findById(serviceId);
     }
 
     public LiveData<Service> getService() {
@@ -30,18 +30,16 @@ public class ServiceDetailModel extends ViewModel {
 
     private static class ServiceModelFactory implements ViewModelProvider.Factory {
 
-        private final AppDatabase db;
         private final int carId;
 
         public ServiceModelFactory(AppDatabase database, int cid) {
-            db = database;
             carId = cid;
         }
 
         @Override
         @SuppressWarnings("unchecked")
         public <T extends ViewModel> T create(Class<T> modelClass) {
-            return (T) new ServiceDetailModel(db, carId);
+            return (T) new ServiceDetailModel(carId);
         }
     }
 

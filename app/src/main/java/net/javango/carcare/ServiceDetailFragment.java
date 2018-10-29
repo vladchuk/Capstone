@@ -68,7 +68,7 @@ public class ServiceDetailFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        database = AppDatabase.getDatabase(getActivity());
+        database = AppDatabase.getDatabase();
         setHasOptionsMenu(true);
         getActivity().setTitle(R.string.service_details);
         carId = getArguments().getInt(ARG_CAR_ID);
@@ -139,7 +139,7 @@ public class ServiceDetailFragment extends Fragment {
                 break;
             case R.id.service_delete:
                 if (serviceId != null)
-                    TaskExecutor.executeDisk(() -> AppDatabase.getDatabase(getContext()).serviceDao().deleteById(serviceId));
+                    TaskExecutor.executeDisk(() -> AppDatabase.getDatabase().serviceDao().deleteById(serviceId));
                 break;
         }
         getActivity().finish();

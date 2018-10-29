@@ -13,8 +13,8 @@ public class ServiceListModel extends ViewModel {
     private LiveData<List<Service>> services;
 
     // must be at least protected
-    protected ServiceListModel(AppDatabase database, int carId) {
-        services = database.serviceDao().getForCar(carId);
+    protected ServiceListModel(int carId) {
+        services = AppDatabase.getDatabase().serviceDao().getForCar(carId);
     }
 
     public LiveData<List<Service>> getServices() {
@@ -33,18 +33,16 @@ public class ServiceListModel extends ViewModel {
     // required because services are looked up by carId
     private static class ServiceModelFactory implements ViewModelProvider.Factory {
 
-        private final AppDatabase db;
         private final int carId;
 
         public ServiceModelFactory(AppDatabase database, int cid) {
-            db = database;
             carId = cid;
         }
 
         @Override
         @SuppressWarnings("unchecked")
         public <T extends ViewModel> T create(Class<T> modelClass) {
-            return (T) new ServiceListModel(db, carId);
+            return (T) new ServiceListModel(carId);
         }
     }
 
