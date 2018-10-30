@@ -24,7 +24,7 @@ public class CarDetailModel extends ViewModel {
     /**
      * Factory method to obtain an instance of this model by carId
      */
-    public static CarDetailModel getInstance(Fragment fragment, AppDatabase db, int carId) {
+    public static CarDetailModel getInstance(Fragment fragment, int carId) {
         CarModelFactory factory = new CarModelFactory(carId);
         CarDetailModel viewModel = ViewModelProviders.of(fragment, factory).get(CarDetailModel.class);
         return viewModel;

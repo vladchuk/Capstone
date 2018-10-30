@@ -3,17 +3,13 @@ package net.javango.carcare;
 import android.app.Activity;
 import android.arch.lifecycle.Observer;
 import android.content.Intent;
-import android.database.Cursor;
 import android.databinding.DataBindingUtil;
-import android.net.Uri;
 import android.os.Bundle;
-import android.provider.ContactsContract;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.NavUtils;
-import android.support.v4.content.FileProvider;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -44,7 +40,6 @@ public class ServiceDetailFragment extends Fragment {
     private static final String DIALOG_DATE = "DialogDate";
     private static final int REQUEST_DATE = 0;
 
-    private AppDatabase database;
     private Integer serviceId;
     private int carId; // should never be null
 
@@ -68,7 +63,6 @@ public class ServiceDetailFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        database = AppDatabase.getDatabase();
         setHasOptionsMenu(true);
         getActivity().setTitle(R.string.service_details);
         carId = getArguments().getInt(ARG_CAR_ID);
@@ -85,7 +79,7 @@ public class ServiceDetailFragment extends Fragment {
         if (savedInstanceState == null) {
             serviceId = (Integer) getArguments().getSerializable(ARG_SERVICE_ID);
             if (serviceId != null) {
-                final ServiceDetailModel viewModel = ServiceDetailModel.getInstance(this, database, serviceId);
+                final ServiceDetailModel viewModel = ServiceDetailModel.getInstance(this, serviceId);
                 viewModel.getService().observe(this, new Observer<Service>() {
                     @Override
                     public void onChanged(@Nullable Service service) {
@@ -97,7 +91,7 @@ public class ServiceDetailFragment extends Fragment {
         } else {
             serviceId = (Integer) savedInstanceState.getSerializable(ARG_SERVICE_ID);
         }
-        CarDetailModel.getInstance(this, database, carId).getCar().observe(this, (car) -> setTitle(car));
+        CarDetailModel.getInstance(this, carId).getCar().observe(this, (car) -> setTitle(car));
         return binding.getRoot();
     }
 
@@ -113,7 +107,7 @@ public class ServiceDetailFragment extends Fragment {
     }
 
     private void setTitle(Car car) {
-        String title = car.getName();
+        String title = car.getModel();
         getActivity().setTitle(title);
     }
 
@@ -179,11 +173,11 @@ public class ServiceDetailFragment extends Fragment {
             public void run() {
                 if (serviceId == null) {
                     // insert
-                    database.serviceDao().addService(service);
+                    AppDatabase.getDatabase().serviceDao().addService(service);
                 } else {
                     //update
                     service.setId(serviceId);
-                    database.serviceDao().updateService(service);
+                    AppDatabase.getDatabase().serviceDao().updateService(service);
                 }
                 getActivity().finish();
             }

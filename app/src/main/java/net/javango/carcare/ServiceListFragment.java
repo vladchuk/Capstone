@@ -55,8 +55,8 @@ public class ServiceListFragment extends Fragment {
         recyclerView.setAdapter(serviceAdapter);
 
         int carId = getArguments().getInt(ARG_CAR_ID);
-        CarDetailModel.getInstance(this, database, carId).getCar().observe(this, (car) -> setTitle(car));
-        ServiceListModel.getInstance(this, database, carId).getServices()
+        CarDetailModel.getInstance(this, carId).getCar().observe(this, (car) -> setTitle(car));
+        ServiceListModel.getInstance(this, carId).getServices()
                 .observe(this, cars -> serviceAdapter.setData(cars));
 
         // Add Service FAB
@@ -69,7 +69,7 @@ public class ServiceListFragment extends Fragment {
     }
 
     private void setTitle(Car car) {
-        String title = car.getName(); // + " - " + getActivity().getString(R.string.service_history);
+        String title = car.getModel(); // + " - " + getActivity().getString(R.string.service_history);
         getActivity().setTitle(title);
     }
 

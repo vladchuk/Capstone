@@ -27,10 +27,13 @@ public class CarDetailFragment extends Fragment {
 
     private static final String ARG_CAR_ID = "car_id";
 
-    private EditText name;
+    private EditText model;
     private EditText year;
+    private EditText licensePlate;
+    private EditText trim;
     private EditText tire;
-    private AppDatabase database;
+    private EditText notes;
+
     private Integer carId;
 
     /**
@@ -50,7 +53,6 @@ public class CarDetailFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        database = AppDatabase.getDatabase();
         setHasOptionsMenu(true);
         getActivity().setTitle(R.string.car_details);
     }
@@ -97,7 +99,7 @@ public class CarDetailFragment extends Fragment {
         if (savedInstanceState == null) {
             carId = (Integer) getArguments().getSerializable(ARG_CAR_ID);
             if (carId != null) {
-                final CarDetailModel viewModel = CarDetailModel.getInstance(this, database, carId);
+                final CarDetailModel viewModel = CarDetailModel.getInstance(this, carId);
                 viewModel.getCar().observe(this, new Observer<Car>() {
                     @Override
                     public void onChanged(@Nullable Car car) {
@@ -116,9 +118,12 @@ public class CarDetailFragment extends Fragment {
             savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_car_detail, container, false);
 
-        name = v.findViewById(R.id.car_name_value);
+        model = v.findViewById(R.id.car_model_value);
         year = v.findViewById(R.id.car_year_value);
+        licensePlate = v.findViewById(R.id.car_plate_value);
+        trim = v.findViewById(R.id.car_trim_value);
         tire = v.findViewById(R.id.car_tire_value);
+        notes = v.findViewById(R.id.car_notes_value);
 
         setupView(savedInstanceState);
         return v;
@@ -131,9 +136,22 @@ public class CarDetailFragment extends Fragment {
     }
 
     private void populateUI(Car car) {
-        name.setText(car.getName());
+        model.setText(car.getModel());
         year.setText(Formatter.format(car.getModelYear()));
+        licensePlate.setText(car.getLicensePlate());
+        trim.setText(car.getTrim());
         tire.setText(car.getTireSize());
+        notes.setText(car.getNotes());
+    }
+
+    private void populateCar(Car car) {
+        car.setModel(model.getText().toString());
+        Integer y = Formatter.parseInt(year.getText().toString());
+        car.setModelYear(y);
+        car.setLicensePlate(licensePlate.getText().toString());
+        car.setTrim(trim.getText().toString());
+        car.setTireSize(tire.getText().toString());
+        car.setNotes(notes.getText().toString());
     }
 
     /**
@@ -141,21 +159,18 @@ public class CarDetailFragment extends Fragment {
      */
     private void saveCar() {
         final Car car = new Car();
-        car.setName(name.getText().toString());
-        Integer y = Formatter.parseInt(year.getText().toString());
-        car.setModelYear(y);
-        car.setTireSize(tire.getText().toString());
+        populateCar(car);
 
         TaskExecutor.executeDisk(new Runnable() {
             @Override
             public void run() {
                 if (carId == null) {
                     // insert
-                    database.carDao().addCar(car);
+                    AppDatabase.getDatabase().carDao().addCar(car);
                 } else {
                     //update
                     car.setId(carId);
-                    database.carDao().updateCar(car);
+                    AppDatabase.getDatabase().carDao().updateCar(car);
                 }
                 getActivity().finish();
             }

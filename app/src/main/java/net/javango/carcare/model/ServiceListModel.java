@@ -24,8 +24,8 @@ public class ServiceListModel extends ViewModel {
     /**
      * Factory method to obtain an instance of this model by carId
      */
-    public static ServiceListModel getInstance(Fragment fragment, AppDatabase db, int carId) {
-        ServiceModelFactory factory = new ServiceModelFactory(db, carId);
+    public static ServiceListModel getInstance(Fragment fragment, int carId) {
+        ServiceModelFactory factory = new ServiceModelFactory(carId);
         ServiceListModel viewModel = ViewModelProviders.of(fragment, factory).get(ServiceListModel.class);
         return viewModel;
     }
@@ -35,7 +35,7 @@ public class ServiceListModel extends ViewModel {
 
         private final int carId;
 
-        public ServiceModelFactory(AppDatabase database, int cid) {
+        public ServiceModelFactory(int cid) {
             carId = cid;
         }
 

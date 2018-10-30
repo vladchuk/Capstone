@@ -191,7 +191,7 @@ public class MainFragment extends ListFragment {
             }
             ViewHolder holder = (ViewHolder) view.getTag();
             Car car = list.get(position);
-            holder.name.setText(car.getName());
+            holder.name.setText(car.getModel());
             holder.year.setText(Formatter.format(car.getModelYear()));
             return view;
         }

@@ -2,11 +2,11 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "6e427bc5ee5a90a0cf5ff9abfc18f7e3",
+    "identityHash": "b0275bf1342f98cffa5475d2525c76dd",
     "entities": [
       {
         "tableName": "Car",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `name` TEXT, `modelYear` INTEGER, `tireSize` TEXT)",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `model` TEXT, `modelYear` INTEGER, `licensePlate` TEXT, `tireSize` TEXT, `trim` TEXT, `notes` TEXT)",
         "fields": [
           {
             "fieldPath": "id",
@@ -15,8 +15,8 @@
             "notNull": true
           },
           {
-            "fieldPath": "name",
-            "columnName": "name",
+            "fieldPath": "model",
+            "columnName": "model",
             "affinity": "TEXT",
             "notNull": false
           },
@@ -27,8 +27,26 @@
             "notNull": false
           },
           {
+            "fieldPath": "licensePlate",
+            "columnName": "licensePlate",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
             "fieldPath": "tireSize",
             "columnName": "tireSize",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "trim",
+            "columnName": "trim",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "notes",
+            "columnName": "notes",
             "affinity": "TEXT",
             "notNull": false
           }
@@ -128,7 +146,7 @@
     ],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, \"6e427bc5ee5a90a0cf5ff9abfc18f7e3\")"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, \"b0275bf1342f98cffa5475d2525c76dd\")"
     ]
   }
 }

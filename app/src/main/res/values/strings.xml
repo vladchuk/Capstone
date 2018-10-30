@@ -2,7 +2,7 @@
     <string name="app_name">Car Care</string>
     <string name="new_car">Add Car</string>
     <string name="search_service_stations">Search Service Stations</string>
-    <string name="car_name_label">Name</string>
+    <string name="car_model_label">Model</string>
     <string name="car_tire_label">Tire Size</string>
     <string name="car_year_label">Model Year</string>
     <string name="cancel_button">Cancel</string>
@@ -24,4 +24,8 @@
     <string name="export_data">Export Data</string>
     <string name="import_data">Import Data</string>
     <string name="import_warning">All current data will be overriden. Proceed?</string>
+    <string name="car_plate_label">License Plate</string>
+    <string name="car_trim_label">Trim Level</string>
+    <string name="notes_label">Notes</string>
+    <string name="service_detail_description_label">Description</string>
 </resources>

@@ -11,9 +11,12 @@ import android.arch.persistence.room.PrimaryKey;
 public class Car {
     @PrimaryKey(autoGenerate = true)
     private int id;
-    private String name;
+    private String model;
     private Integer modelYear;
+    private String licensePlate;
     private String tireSize;
+    private String trim;
+    private String notes;
 
     public Car() {
         // required by room
@@ -27,12 +30,12 @@ public class Car {
         this.id = id;
     }
 
-    public String getName() {
-        return name;
+    public String getModel() {
+        return model;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setModel(String model) {
+        this.model = model;
     }
 
     public String getTireSize() {
@@ -52,6 +55,30 @@ public class Car {
     }
 
     public String toString() {
-        return name;
+        return model;
+    }
+
+    public String getLicensePlate() {
+        return licensePlate;
+    }
+
+    public void setLicensePlate(String licensePlate) {
+        this.licensePlate = licensePlate;
+    }
+
+    public String getTrim() {
+        return trim;
+    }
+
+    public void setTrim(String trim) {
+        this.trim = trim;
+    }
+
+    public String getNotes() {
+        return notes;
+    }
+
+    public void setNotes(String notes) {
+        this.notes = notes;
     }
 }

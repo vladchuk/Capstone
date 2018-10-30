@@ -19,7 +19,7 @@ import java.io.File;
 @TypeConverters(DateConverter.class)
 public abstract class AppDatabase extends RoomDatabase {
 
-    public static final String NAME = "CARCARE_DB";
+    public static final String NAME = "CarCare.db";
 
     private static AppDatabase DB;
     private static File dbPath;

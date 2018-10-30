@@ -1,6 +1,5 @@
 package net.javango.carcare.widget;
 
-import android.app.Activity;
 import android.appwidget.AppWidgetManager;
 import android.content.Context;
 import android.content.Intent;
@@ -89,7 +88,7 @@ public class WidgetConfigureActivity extends AppCompatActivity {
     static void saveWidgetPref(Context context, int appWidgetId, Car car) {
         SharedPreferences.Editor prefs = context.getSharedPreferences(PREFS_NAME, 0).edit();
         prefs.putInt(PREF_PREFIX_KEY + appWidgetId, car.getId());
-        prefs.putString(PREF_PREFIX_NAME + appWidgetId, car.getName());
+        prefs.putString(PREF_PREFIX_NAME + appWidgetId, car.getModel());
         prefs.apply();
     }
 
